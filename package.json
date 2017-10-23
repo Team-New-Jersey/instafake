@@ -1,11 +1,12 @@
 {
   "name": "instafake",
   "version": "1.0.0",
-  "description": "",
+  "description": "Instagram clone for NYCDA",
   "private": true,
   "main": "db.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
@@ -36,5 +37,14 @@
     "sequelize": "^4.15.1",
     "sequelize-cli": "^3.0.0",
     "serve-favicon": "^2.4.5"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-New-Jersey/instafake.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Team-New-Jersey/instafake/issues"
+  },
+  "homepage": "https://github.com/Team-New-Jersey/instafake#readme"
 }
