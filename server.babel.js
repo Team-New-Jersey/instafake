@@ -4,39 +4,44 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport'); 
+var passport = require('passport');
+var session = require('express-session'); 
 
 // REQUIRE ROUTES, see node-file-upload-starter/app.js
 
 var app = express();
-app.use(passport.initialize()); 
+app.use(passport.initialize());
+app.use(passport.session()); 
 
 require('./strategies/passport-local')(passport); // NOT IN SLIDES, SO NECESSARY WTF!
-var userRoutes = require('./routes/user')(passport);
+var loginRoutes = require('./routes/login')(passport);
+var signupRoutes = require('./routes/login')(passport);
+var homeRoutes =  require('./routes/home')(passport);
+// var profileRoutes =  require('./routes/profile')(passport);
 
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(cookieParser());
+app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// node-file-upload-starter/app.js, line 25
-// app.use('/', index);
-// app.use('/products', products);
-
 // mount routers
 
-app.use('/api/user', userRoutes); // CHANGE ROUTES
+app.use('/', loginRoutes); 
+app.use('/signup', signupRoutes);
+app.use('/home', homeRoutes);
+// app.use('/profile', profileRoutes);
 
 
-app.use('/api/*', function(req, res, next) {
+app.use('/*', function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
@@ -76,3 +81,7 @@ if (app.get('env') === 'development') {
 
 
 module.exports = app;
+
+app.listen(4000, function() {
+  console.log('App is listening on port 4000!');
+});

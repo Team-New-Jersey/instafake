@@ -1,20 +1,20 @@
 var express = require('express');
 var router = express.Router();
 
+
 module.exports = function(passport) {
-	router.post('./', passport.authenticate('signup'), function(req, res) {        
-		res.json({user: req.user}) // <<-- passport will add this to the req 
-		//not res.json
-		res.redirect('/home');    
+	router.get('/', function(req, res) {
+		res.render('login');
 	});
-
-	// login
-	// router.get
-
+	router.get('/signup', function(req, res) {
+		res.render('signup');
+	});
+	router.post('/signup', passport.authenticate('local-signup'), function(req, res) {        
+		console.log("Signed up");
+		res.redirect('/');    
+	});
+	router.post('/', passport.authenticate('local-login', { failureRedirect: '/' }), function(req, res) {
+    	res.render('home', { user: req.user });
+  	});
+  	return router;
 };
-
-// Sign in needs thumbnail upload option
-
-
-// Modify passport-local:
-// 
