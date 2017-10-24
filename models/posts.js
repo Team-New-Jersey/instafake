@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Posts = sequelize.define('Posts', {
+  var Posts = sequelize.define('posts', {
     image_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     description: DataTypes.TEXT,
