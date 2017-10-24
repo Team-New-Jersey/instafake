@@ -16,12 +16,6 @@ module.exports = (sequelize, DataTypes) => {
 // to ensure the table is created
 Users
   .sync()
-  .then(//function() => User.create({
-  //   username: 'nagem',
-  //   password: '81'
-  // }))
-  // .then(nagem => {
-  //   console.log(nagem.get({
-  //     plain:true
-    // }));
+  .then(
+    
   });
