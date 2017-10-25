@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 };
 
 // to ensure the table is created
-// users
+// user
 //   .sync()
 //   .then(function(){
 

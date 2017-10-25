@@ -5,7 +5,7 @@ var User = require("../db").users;
 
 module.exports = function(passport) {   
 	passport.serializeUser(function(user, done) {      
-		done(null, user.user_id);    
+		done(null, user.id);    
 	}); 
 	passport.use('local-signup', new LocalStrategy({
 	        usernameField: 'username',        
@@ -24,7 +24,7 @@ function processSignupCallback(request, username, password, done) {
 		where: { 
 			'username' :  username         
 		},        
-			attributes: ['user_id']    
+			attributes: ['id']    
 		})    
 		.then(function(user) {
 			if (user) {

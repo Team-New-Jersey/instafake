@@ -2,10 +2,15 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('posts', {
-      image_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      image_id: {
+        allowNull: false,
+        autoIncrement: true,
         type: Sequelize.INTEGER
       },
       user_id: {
@@ -22,7 +27,7 @@ module.exports = {
         // other option: setting type to 'TIMESTAMP' and defaultValue to Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
       }

@@ -2,6 +2,12 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('likes', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       username: {
         type: Sequelize.TEXT
       },
@@ -17,7 +23,7 @@ module.exports = {
         defaultValue: Sequelize.NOW
       },
       updatedAt: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW
       }
