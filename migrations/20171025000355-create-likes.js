@@ -11,7 +11,7 @@ module.exports = {
       username: {
         type: Sequelize.TEXT
       },
-      image_id: {
+      post_id: {
         type: Sequelize.INTEGER
       },
       thumbs_up: {

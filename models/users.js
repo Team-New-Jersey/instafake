@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var user = sequelize.define('users', {
+  var users = sequelize.define('users', {
     user_id: DataTypes.INTEGER,
     username: DataTypes.TEXT,
     password: DataTypes.TEXT
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
-  return user;
+  return users;
 };
 
 // to ensure the table is created

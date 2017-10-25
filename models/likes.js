@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   var likes = sequelize.define('likes', {
     username: DataTypes.TEXT,
-    image_id: DataTypes.INTEGER,
+    post_id: DataTypes.INTEGER,
     thumbs_up: DataTypes.BOOLEAN,
     created_at: DataTypes.DATE
   }, {

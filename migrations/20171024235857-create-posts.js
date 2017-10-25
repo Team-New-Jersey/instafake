@@ -8,13 +8,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      image_id: {
+      post_id: {
         allowNull: false,
         autoIncrement: true,
         type: Sequelize.INTEGER
       },
       user_id: {
         type: Sequelize.INTEGER
+      },
+      title: {
+        type: Sequelize.TEXT
       },
       description: {
         type: Sequelize.TEXT

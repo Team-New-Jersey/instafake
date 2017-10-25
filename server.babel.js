@@ -5,13 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var session = require('express-session'); 
+var session = require('express-session');
+var Promise = require('bluebird');
 
 // REQUIRE ROUTES, see node-file-upload-starter/app.js
 
 var app = express();
 app.use(passport.initialize());
-app.use(passport.session()); 
+app.use(passport.session());
 
 require('./strategies/passport-local')(passport); // NOT IN SLIDES, SO NECESSARY WTF!
 var loginRoutes = require('./routes/login')(passport);
@@ -35,7 +36,7 @@ app.set('view engine', 'ejs');
 
 // mount routers
 
-app.use('/', loginRoutes); 
+app.use('/', loginRoutes);
 app.use('/signup', signupRoutes);
 app.use('/home', homeRoutes);
 // app.use('/profile', profileRoutes);
