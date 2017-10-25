@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var users = sequelize.define('users', {
+  var user = sequelize.define('users', {
     user_id: DataTypes.INTEGER,
     username: DataTypes.TEXT,
     password: DataTypes.TEXT
@@ -8,14 +8,16 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+      }
     }
   });
-  return users;
+  return user;
 };
 
 // to ensure the table is created
-users
-  .sync()
-  .then(
+// users
+//   .sync()
+//   .then(function(){
 
-  });
+
+//   });

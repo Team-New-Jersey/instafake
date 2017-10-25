@@ -9,14 +9,15 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+      }
     }
   });
   return posts;
 };
 
 // to ensure the table is created
-posts
-  .sync()
-  .then(function(){
+// posts
+//   .sync()
+//   .then(function(){
 
-  });
+//   });

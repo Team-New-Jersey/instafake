@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     username: DataTypes.TEXT,
     image_id: DataTypes.INTEGER,
     thumbs_up: DataTypes.BOOLEAN,
-    created_at: Sequelize.DATE
+    created_at: DataTypes.DATE
   }, {
     classMethods: {
       associate: function(models) {
@@ -12,13 +12,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
-  return likes;
+  return Likes;
 };
 
 
 // to ensure the table is created
-likes
-  .sync()
-  .then(function(){
+// Likes
+//   .sync()
+//   .then(function(){
 
-  });
+//   });
