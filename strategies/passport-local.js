@@ -8,21 +8,21 @@ module.exports = function(passport) {
 		done(null, user.id);    
 	}); 
 	passport.use('local-signup', new LocalStrategy({
-	        usernameField: 'email',        
+	        usernameField: 'username',        
 	        passwordField: 'password',        
 	        passReqToCallback: true    
 	}, processSignupCallback));   // <<-- more on this to come
 	passport.use('local-login', new LocalStrategy({        
-		usernameField : 'email',        
+		usernameField : 'username',        
 		passwordField : 'password'    
 	}, processLoginCallback));
 };
 
-function processSignupCallback(request, email, password, done) {
-// first search to see if a user exists in our system with that email    
+function processSignupCallback(request, username, password, done) {
+// first search to see if a user exists in our system with that username   
 	User.findOne({ // THE SLIDES USE UserModel, I CHANGED IT TO USER BC OF LINE 3, SAME FOR LINE 31
 		where: { 
-			'email' :  email         
+			'username' :  username         
 		},        
 			attributes: ['id']    
 		})    
@@ -46,11 +46,11 @@ function processSignupCallback(request, email, password, done) {
 		});
 };
 
-function processLoginCallback(email, password, done) {
-// first let's find a user in our system with that email    
+function processLoginCallback(username, password, done) {
+// first let's find a user in our system with that username    
 	User.findOne({        
 		where: { 
-			'email' :  email         
+			'username' :  username         
 			}    
 		})    
 		.then(function(user) {
