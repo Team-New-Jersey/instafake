@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+      }
     }
   });
   return Users;
@@ -16,6 +17,5 @@ module.exports = (sequelize, DataTypes) => {
 // to ensure the table is created
 Users
   .sync()
-  .then(
-    
-  });
+  .then(function() {
+});

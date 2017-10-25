@@ -20,5 +20,4 @@ module.exports = (sequelize, DataTypes) => {
 Comments
   .sync()
   .then(function(){
-
-  });
+});
