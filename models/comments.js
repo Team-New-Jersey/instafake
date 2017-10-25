@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Comments = sequelize.define('comments', {
+  var comments = sequelize.define('comments', {
     username: DataTypes.TEXT,
     image_id: DataTypes.INTEGER,
     comment: DataTypes.TEXT,
@@ -10,14 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+
       }
     }
   });
-  return Comments;
+  return comments;
 };
-
-// to ensure the table is created
-Comments
-  .sync()
-  .then(function(){
-});

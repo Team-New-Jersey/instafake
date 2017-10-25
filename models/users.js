@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Users = sequelize.define('users', {
+  var users = sequelize.define('users', {
     user_id: DataTypes.INTEGER,
     username: DataTypes.TEXT,
     password: DataTypes.TEXT
@@ -8,20 +8,14 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-      }
     }
   });
-  return Users;
+  return users;
 };
 
 // to ensure the table is created
-Users
+users
   .sync()
-<<<<<<< HEAD
-  .then(function() {
-});
-=======
   .then(
 
   });
->>>>>>> troubleshooting sequelize/postgres issues

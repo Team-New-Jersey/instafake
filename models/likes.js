@@ -12,12 +12,12 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
-  return Likes;
+  return likes;
 };
 
 
 // to ensure the table is created
-Likes
+likes
   .sync()
   .then(function(){
 

@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Posts = sequelize.define('posts', {
+  var posts = sequelize.define('posts', {
     image_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
     description: DataTypes.TEXT,
@@ -9,14 +9,14 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-      }
     }
   });
-  return Posts;
+  return posts;
 };
 
 // to ensure the table is created
-Posts
+posts
   .sync()
   .then(function(){
-});
+
+  });
