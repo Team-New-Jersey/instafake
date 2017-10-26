@@ -22,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        like.belongsTo(models.user);
-        like.belongsTo(models.post);
+        likes.belongsTo(models.users);
+        likes.belongsTo(models.posts);
       }
     }
   });

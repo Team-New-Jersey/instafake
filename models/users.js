@@ -7,9 +7,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     classMethods: {
       associate: function(models) {
-        user.hasMany(models.post);
-        user.hasMany(models.comment);
-        user.hasMany(models.like);
+        users.hasMany(models.posts);
+        users.hasMany(models.comments);
+        users.hasMany(models.likes);
       }
     }
   });
