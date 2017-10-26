@@ -1,18 +1,33 @@
 'use strict';
+var Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  var likes = sequelize.define('likes', {
-    username: DataTypes.TEXT,
-    post_id: DataTypes.INTEGER,
-    thumbs_up: DataTypes.BOOLEAN,
-    created_at: DataTypes.DATE
+  var like = sequelize.define('likes', {
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    },
+    post_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'posts',
+        key: 'id'
+      }
+    },
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        like.belongsTo(models.user);
+        like.belongsTo(models.post);
       }
     }
   });
-  return Likes;
+  return like;
 };
 
 

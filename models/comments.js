@@ -1,18 +1,33 @@
 'use strict';
+var Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  var comments = sequelize.define('comments', {
-    username: DataTypes.TEXT,
-    post_id: DataTypes.INTEGER,
+  var comment = sequelize.define('comments', {
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    },
+    post_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'posts',
+        key: 'id'
+      }
+    },
     comment: DataTypes.TEXT,
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-
+        comment.belongsTo(models.user);
+        comment.belongsTo(models.post);
       }
     }
   });
-  return comments;
+  return comment;
 };
+

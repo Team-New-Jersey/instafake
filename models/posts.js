@@ -1,19 +1,27 @@
 'use strict';
+var Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  var posts = sequelize.define('posts', {
-    post_id: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER,
-    title: DataTypes.TEXT,
+  var post = sequelize.define('posts', {
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    },
     description: DataTypes.TEXT,
-    created_at: DataTypes.DATE
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
+        post.belongsTo(models.user);
+        post.hasMany(models.like);
+        post.hasMany(models.comment);
       }
     }
   });
-  return posts;
+  return post;
 };
 
 // to ensure the table is created

@@ -26,23 +26,9 @@ fs
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
-    db[modelName].associate(db),
-    dbUsers.hasMany(db.Posts, {as: 'Posts'}),
-    dbPosts.belongsTo(db.Users, {as: 'user_id'}),
-    dbPosts.hasMany(db.Comments, {as: 'Comments'}),
-    dbComments.belongsTo(db.Posts, {as: 'image_id'}),
-    dbUsers.hasMany(db.Comments, {as: 'Posts'}),
-    dbComments.belongsTo(db.Users, {as: 'username'}),
-    dbPosts.hasMany(db.Likes, {as: 'Likes'}),
-    dbLikes.belongsTo(db.Posts, {as: 'image_id'}),
-    dbUsers.hasMany(db.Likes, {as: 'Likes'}),
-    dbLikes.belongsTo(db.Users, {as: 'username'});
+    db[modelName].associate(db);
   }
 });
-
-// Is it supposed to be in the object.keys, or in a new function?
-
-
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
