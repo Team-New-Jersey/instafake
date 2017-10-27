@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="UTF-8">
+      <title>Instafake</title>
+      <link rel="stylesheet" href="/stylesheets/profilesample.css"/>
+      <% include ./partials/_header.ejs %>
+  </head>
+  <body>
+      <!-- <header>
+      <div class="head">
+        <h2>Empty</h2>
+      </div>
+      </header> -->
+          <div class="profile-head">
+            <div class="user-1-thumbnail">
+                <a href="profile.ejs"><img src="/images/User-1.jpg" alt="User 1"/></a>
+            </div>
+            <div class="user">
+              <h3>username</h3>
+            </div>
+
+<!-- add other user profile information as wanted -->
+      <div id="user-posts">
+        <div id="post-1">
+          <div class="post-body">
+            <a href="profile.ejs" class="post-box"><img src="/images/Post-1.jpg" alt="Tracks!"/></a>
+          </div>
+          <div class="post-bottom">
+            <div class="buttons">
+                <button type="button">Edit</button>
+                <button type="button">Delete</button>
+            </div>
+            <p> likes and comments </p>
+          </div>
+        </div>
+
+
+        <div id="post-2">
+          <div class="post-body">
+            <a href="profile.ejs" class="post-box"><img src="/images/Post-1.jpg" alt="Tracks!"/></a>
+          </div>
+          <div class="post-bottom">
+            <div class="buttons">
+                <button type="button">Edit</button>
+                <button type="button">Delete</button>
+            </div>
+            <p> likes and comments </p>
+          </div>
+        </div>
+
+
+  <!-- images resized in .post-box (css)  -->
+        <div id="post-3">
+          <div class="post-body">
+            <a href="profile.ejs" class="post-box"><img src="/images/Post-1.jpg" alt="Tracks!"/></a>
+          </div>
+          <div class="post-bottom">
+            <div class="buttons">
+                <button type="button">Edit</button>
+                <button type="button">Delete</button>
+            </div>
+            <p> likes and comments </p>
+          </div>
+        </div>
+
+
+        <div id="post-4">
+          <div class="post-body">
+            <a href="profile.ejs" class="post-box"><img src="/images/Post-1.jpg" alt="Tracks!"/></a>
+          </div>
+          <div class="post-bottom">
+            <div class="buttons">
+                <button type="button">Edit</button>
+                <button type="button">Delete</button>
+            </div>
+            <p> likes and comments </p>
+          </div>
+        </div>
+
+
+        <!-- post.description (in % ) -->
+        <!--for likes, likesFindAll true with correct image_id & username to display users  -->
+        <!--for comments, display all with correct image_id with comment and timestamp  -->
+        <!-- FOR ALL OF THESE, check with Ajax on whether or not the GET method changes  -->
+        <!-- also are we forgoing proflie pictures? becasue we'd have to insert a new column in the users table -->
+        <!-- in order to call it on the home page...unless we just use the same picutre in the code -->
+      </div>
+
+
+      <footer>
+        &copy; 2017
+      </footer>
+
+  </body>
+</html>
