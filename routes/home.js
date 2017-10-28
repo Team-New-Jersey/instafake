@@ -42,13 +42,7 @@ router.post('/create', requestHandler.single('nameofField'),
 					});
 			})
     }
-);
+	);
+});
 
-module.exports = router
-
-
-// //Check if Genre with same name already exists
-// Genre.findOne({ 'name': req.body.name })
-//     .exec( function(err, found_genre) {
-//     console.log('found_genre: '+found_genre)
-//     if (err) { return next(err); }
+module.exports = router;
