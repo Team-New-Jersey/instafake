@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+const models  = require('../db');
 
 module.exports = function(passport) {
 	router.get('/', function(req, res) {
@@ -9,12 +9,41 @@ module.exports = function(passport) {
 	router.get('/signup', function(req, res) {
 		res.render('signup');
 	});
-	router.post('/signup', passport.authenticate('local-signup'), function(req, res) {        
-		console.log("Signed up");
-		res.redirect('/');    
+	router.post('/signup', function(req, res, next) {
+		passport.authenticate('local-signup', function(err, user, info) {
+			if (err) {
+			  	return next(err); 
+			}
+			if (!user) {
+			   	return next({ error : true, message : info });
+			}
+			req.login(user, function(loginErr) {
+			   	if (loginErr) {
+			     	return next(loginErr);
+			   	}
+			 	return res.redirect('/api/');
+			}); 
+		})(req, res, next);
 	});
-	router.post('/', passport.authenticate('local-login', { failureRedirect: '/' }), function(req, res) {
-    	res.render('home', { user: req.user });
-  	});
+
+	router.post('/', function(req, res, next) {
+		passport.authenticate('local-login', function(err, user, info) {
+			if (err) {
+			  	return next(err); 
+			}
+			if (! user) {
+			   	return next({ error : true, message : info });
+			}
+			req.login(user, function(loginErr) {
+			    if (loginErr) {
+					return next(loginErr);
+			    } 
+				res.cookie('jwt', user.token);
+				return res.redirect('/api/protected/');
+			}); 
+		})(req, res, next);
+	});
   	return router;
 };
+
+

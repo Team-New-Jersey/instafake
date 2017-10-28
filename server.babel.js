@@ -5,45 +5,44 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var session = require('express-session');
-var Promise = require('bluebird');
-
-// REQUIRE ROUTES, see node-file-upload-starter/app.js
 
 var app = express();
 app.use(passport.initialize());
-app.use(passport.session());
 
-require('./strategies/passport-local')(passport); // NOT IN SLIDES, SO NECESSARY WTF!
-var loginRoutes = require('./routes/login')(passport);
-var signupRoutes = require('./routes/login')(passport);
-var homeRoutes =  require('./routes/home')(passport);
-// var profileRoutes =  require('./routes/profile')(passport);
+require('./strategies/passport-local')(passport); 
+require('./strategies/passport-jwt')(passport);
 
-
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended: true } ));
 app.use(cookieParser());
-app.use(session({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+var loginRoutes = require('./routes/login')(passport);
+var homeRoutes = require('./routes/home');
+var profileRoutes = require('./routes/profile');
 
-// mount routers
+app.use('/api/', loginRoutes);
 
-app.use('/', loginRoutes);
-app.use('/signup', signupRoutes);
-app.use('/home', homeRoutes);
-// app.use('/profile', profileRoutes);
+app.use('/api/protected/', function(req, res, next) {
+  passport.authenticate('jwt', {session: false}, function(err, user, jwtError) {
+    if (user) {
+      req.login(user, null, () => {})
+      next()
+    } else  {
+      next(jwtError)
+    }
+  })(req, res, next)
+});
 
+app.use('/api/protected/', homeRoutes);
+app.use('/api/protected/', profileRoutes);
 
-app.use('/*', function(req, res, next) {
+app.use('/api/*', function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);

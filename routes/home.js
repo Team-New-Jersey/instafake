@@ -3,17 +3,12 @@ var router = express.Router();
 var multer = require('multer');
 var models = require('../db');
 
+var User = require('../db').users;
 
-module.exports = function(passport) {
-	router.get('/home', require('connect-ensure-login').ensureLoggedIn(), function(req, res){
-    	res.render('home', { user: req.user });
-  	});
-	router.get('/logout', function(req, res){
-    	req.logout();
-    	res.redirect('/');
-  	});
-  	return router;
-};
+router.get('/', function(req, res, next) {
+	res.render('home');
+});
+
 
 var myStorage = multer.diskStorage({
   destination: function(req, file, cb) {
@@ -48,7 +43,7 @@ router.post('/create', requestHandler.single('nameofField'),
     }
 );
 
-
+module.exports = router
 // //Check if Genre with same name already exists
 // Genre.findOne({ 'name': req.body.name })
 //     .exec( function(err, found_genre) {
@@ -70,3 +65,4 @@ router.post('/create', requestHandler.single('nameofField'),
 // });
 
 // eg
+

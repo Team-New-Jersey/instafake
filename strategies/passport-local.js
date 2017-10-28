@@ -1,53 +1,43 @@
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt');
-var saltRounds = require('../config/config');
+var jwt = require('jsonwebtoken');
+var config = require('../config/config');
 var User = require("../db").users;
 
-module.exports = function(passport) {   
-	passport.serializeUser(function(user, done) {      
-		done(null, user.id);    
-	}); 
-	passport.use('local-signup', new LocalStrategy({
-	        usernameField: 'username',        
-	        passwordField: 'password',        
-	        passReqToCallback: true    
-	}, processSignupCallback));   // <<-- more on this to come
-	passport.use('local-login', new LocalStrategy({        
-		usernameField : 'username',        
-		passwordField : 'password'    
-	}, processLoginCallback));
-};
-
 function processSignupCallback(request, username, password, done) {
-// first search to see if a user exists in our system with that username   
-	User.findOne({ // THE SLIDES USE UserModel, I CHANGED IT TO USER BC OF LINE 3, SAME FOR LINE 31
+	User.findOne({
 		where: { 
 			'username' :  username         
 		},        
 			attributes: ['id']    
 		})    
-		.then(function(user) {
-			if (user) {
-			// user exists call done() passing null and false
-				return done(null, false);        
-			} else {
-			// create the new user
-				var userToCreate = request.body; // CHANGED req TO request, LINE 15 USES REQUEST
+			.then(function(user) {
+				if (user) {
+					return done(null, false);        
+				} else {
+					var userToCreate = request.body; 
 
-				bcrypt.hash(userToCreate.password, saltRounds.saltRounds, function(err, hash) {               
-			  		userToCreate.password = hash;               
-			  		User.create(userToCreate)               
-			  		.then(function(createdRecord) {                    
-			  			createdRecord.password = undefined;
-			  			return done(null, createdRecord);               
-			  		});            
-			  	});        
-			}    
-		});
-};
+					bcrypt.hash(userToCreate.password, config.saltRounds, function(err, hash) {       
 
-function processLoginCallback(username, password, done) {
-// first let's find a user in our system with that username    
+				  		userToCreate.password = hash;           
+
+				  		User.create(userToCreate)               
+				  			.then(function(createdRecord) {
+				  				jwt.sign({id: createdRecord.id}, 
+	            				config.jwtSecret, {
+	              					expiresIn: config.jwtExpiration
+	            				}, function(err, token) {
+	              					createdRecord.token = token;
+	              					createdRecord.password = password;
+	             	 				return done(null, createdRecord);
+	               			});
+          			});
+      		});
+    	}
+  	});
+}
+
+function processLoginCallback(username, password, done) {   
 	User.findOne({        
 		where: { 
 			'username' :  username         
@@ -57,11 +47,37 @@ function processLoginCallback(username, password, done) {
 			if (!user) {
 				return done(null, false)        
 			}
-			// make sure the password they provided matches what we have
-			// (think about this one, before moving forward)        
 			bcrypt.compare(password, user.password, function(err, result) {            
 				user.password = undefined;
-				return result ? done(null, user) : done(null, false);        
-			});    
-		});
-	};
+				if (err) {
+          			return done(null, false, err)
+        		} else if (!result) {
+          			return done(null, false, "Invalid Password for provided email")
+        		} else {
+          			jwt.sign({id: user.id}, config.jwtSecret, {expiresIn: config.jwtExpiration}, function(err, token) {
+            		user.token = token;
+           			user.save()
+            			.then(function(savedRecord) {
+              				return done(null, savedRecord);
+            			});
+          			});
+        		}
+      		});
+    	});
+}
+
+module.exports = function(passport) {
+
+    passport.serializeUser(function(user, done) {
+    	done(null, user.id);
+	});
+	passport.use('local-signup', new LocalStrategy({
+	        usernameField: 'username',        
+	        passwordField: 'password',        
+	        passReqToCallback: true    
+	}, processSignupCallback));  
+	passport.use('local-login', new LocalStrategy({        
+		usernameField : 'username',        
+		passwordField : 'password'  
+	}, processLoginCallback));
+};
