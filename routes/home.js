@@ -23,6 +23,7 @@ var myStorage = multer.diskStorage({
 
 var requestHandler = multer({ storage: myStorage })
 
+
 router.post('/create', requestHandler.single('nameofField'),
     function(req, res, next) {
 			models.post.findAll({
@@ -44,25 +45,10 @@ router.post('/create', requestHandler.single('nameofField'),
 );
 
 module.exports = router
+
+
 // //Check if Genre with same name already exists
 // Genre.findOne({ 'name': req.body.name })
 //     .exec( function(err, found_genre) {
 //     console.log('found_genre: '+found_genre)
 //     if (err) { return next(err); }
-//
-//         if (found_genre) {
-//             //Genre exists, redirect to its detail page
-//             res.redirect(found_genre.url);
-//             }
-//         else {
-//             genre.save(function (err) {
-//                 if (err) { return next(err); }
-//                     //Genre saved. Redirect to genre detail page
-//                     res.redirect(genre.url);
-//                 });
-//         }
-//
-// });
-
-// eg
-
