@@ -4,6 +4,9 @@
   "description": "Instagram clone for NYCDA",
   "private": true,
   "main": "db.js",
+  "engines": {
+    "node": "6.11.2"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
