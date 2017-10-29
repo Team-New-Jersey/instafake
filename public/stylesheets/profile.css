@@ -1,9 +1,37 @@
+#userProfile {
+  position: fixed;
+  margin-left: 75px;
+}
+
+h2 {
+  text-align: right;
+  padding-bottom: 100px;
+  padding-left: 50px;
+  font-style: bold;
+  font-family: serif;
+  margin-right: 55px;
+}
+
+.user-profile-thumbnail img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0px;
+    height: 200px;
+    width: 200px;
+    background-size: cover;
+    display: block;
+    border-radius: 300px;
+    -webkit-border-radius: 300px;
+    -moz-border-radius: 300px;
+    margin: auto;
+}
+
 #form {
   width: 600px;
   height: 500px;
   border: 5px solid black;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 150px;
 
 }
 
@@ -31,6 +59,7 @@
     padding: 10px;
     margin-top: 100px;
     margin-bottom: 100px;
+    margin-right: 150px;
 }
 
 #post-2 {
@@ -39,6 +68,7 @@
     border: 3px solid black;
     padding: 10px;
     margin-bottom: 100px;
+    margin-right: 150px;
 }
 
 

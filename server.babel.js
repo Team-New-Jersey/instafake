@@ -9,7 +9,7 @@ var passport = require('passport');
 var app = express();
 app.use(passport.initialize());
 
-require('./strategies/passport-local')(passport); 
+require('./strategies/passport-local')(passport);
 require('./strategies/passport-jwt')(passport);
 
 app.use(logger('dev'));
@@ -25,6 +25,7 @@ app.set('view engine', 'ejs');
 var loginRoutes = require('./routes/login')(passport);
 var homeRoutes = require('./routes/home');
 var profileRoutes = require('./routes/profile');
+var logoutRoutes = require('./routes/logout');
 
 app.use('/api/', loginRoutes);
 
@@ -41,6 +42,7 @@ app.use('/api/protected/', function(req, res, next) {
 
 app.use('/api/protected/', homeRoutes);
 app.use('/api/protected/', profileRoutes);
+app.use('/api/protected', logoutRoutes);
 
 app.use('/api/*', function(req, res, next) {
   var err = new Error('Not Found');
