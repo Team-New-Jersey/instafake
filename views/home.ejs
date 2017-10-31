@@ -9,15 +9,12 @@
   </head>
   <body>
     <div id="feed">
-    <script>
        <% postIds.forEach(function(post) {
         var postIdIndex = postIds.indexOf(post);
         var theUserId = postUserIds[postIdIndex];
         var userIdIndex = userIds.indexOf(theUserId);
         var findName = usernames[userIdIndex];
-      });
         %>
-      </script>
         <div id="post-1">
           <div class="post-head">
             <div class="user-1-thumbnail">
@@ -68,170 +65,8 @@
               </div>
             </div>
           </div>
-      <!-- <% }) %> -->
+      <% }); %>
         </div>
-
-        <div id="post-2">
-          <div class="post-head">
-            <div class="user-1-thumbnail">
-                <a href="profile.ejs"><img src="/images/User-1.jpg" alt="User 1"/></a>
-            </div>
-            <div class="user">
-              <h3><%= findName %></h3>
-            </div>
-          </div>
-          <div class="post-body">
-            <a href="profile.ejs" class="post-box"><img src="/images/Post-2.jpg" alt="Camel"/></a>
-          </div>
-          <div class="post-description">
-            <p> Camel? </p>
-          </div>
-          <div class="post-bottom">
-            <div class="buttons">
-                <button type="button">Edit</button>
-                <button type="button" onclick="submitdata();">Delete</button>
-            </div>
-        </div>
-          <div id="holder">
-            <div id="form">
-              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-                <div>
-                  <label>Like</label>
-                  <input type="button" value="Like">
-                </div>
-              </form>
-            </div>
-            <!-- <div class="box entypo-thumbs-up"> Like</div> -->
-          </div>
-          <div id="comments">
-            <div id="form">
-              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-                <div class="commentinfo">
-                  <label>Comment:</label>
-                  <input type="text" name="comment"/><br/>
-                </div>
-                <div>
-                  <input type="submit"/>
-                </div>
-              </form>
-            </div>
-            </script>
-          </div>
-          </div>
-          </div>
-        </div>
-      </div>
-  <!-- <% }) %> -->
-    </div>
-
-  <!-- images resized in .post-box (css)  -->
-        <div id="post-3">
-          <div class="post-head">
-            <div class="user-2-thumbnail">
-                <a href="profile.ejs"><img src="/images/User-2.jpg" alt="User 2"/></a>
-            </div>
-            <div class="user">
-              <h3><%= findName %></h3>
-            </div>
-          </div>
-          <div class="post-body">
-            <a href="profile.ejs" class="post-box"><img src="/images/Post-3.jpg" alt="Home court"/></a>
-          </div>
-          <div class="post-description">
-            <p> But why... </p>
-          </div>
-          <div class="post-bottom">
-            <div class="buttons">
-                <button type="button">Edit</button>
-                <button type="button" onclick="submitdata();">Delete</button>
-            </div>
-        </div>
-          <div id="holder">
-            <div id="form">
-              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-                <div>
-                  <label>Like</label>
-                  <input type="button" value="Like">
-                </div>
-              </form>
-            </div>
-            <!-- <div class="box entypo-thumbs-up"> Like</div> -->
-          </div>
-          <div id="comments">
-            <div id="form">
-              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-                <div class="commentinfo">
-                  <label>Comment:</label>
-                  <input type="text" name="comment"/><br/>
-                </div>
-                <div>
-                  <input type="submit"/>
-                </div>
-              </form>
-            </div>
-            </script>
-          </div>
-          </div>
-          </div>
-        </div>
-      </div>
-  <!-- <% }) %> -->
-    </div>
-
-
-        <div id="post-4">
-          <div class="post-head">
-            <div class="user-3-thumbnail">
-                <a href="profile.ejs"><img src="/images/User-3.jpg" alt="User 3"/></a>
-            </div>
-            <div class="user">
-              <h3><%= findName %></h3>
-            </div>
-          </div>
-          <div class="post-body">
-            <a href="profile.ejs" class="post-box"><img src="/images/Post-4.jpg" alt="Space Metropolis?"/></a>
-          </div>
-          <div class="post-description">
-            <p> Space Metropolis...! </p>
-          </div>
-          <div class="post-bottom">
-            <div class="buttons">
-                <button type="button">Edit</button>
-                <button type="button" onclick="submitdata();">Delete</button>
-            </div>
-        </div>
-          <div id="holder">
-            <div id="form">
-              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-                <div>
-                  <label>Like</label>
-                  <input type="button" value="Like">
-                </div>
-              </form>
-            </div>
-            <!-- <div class="box entypo-thumbs-up"> Like</div> -->
-          </div>
-          <div id="comments">
-            <div id="form">
-              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-                <div class="commentinfo">
-                  <label>Comment:</label>
-                  <input type="text" name="comment"/><br/>
-                </div>
-                <div>
-                  <input type="submit"/>
-                </div>
-              </form>
-            </div>
-            </script>
-          </div>
-          </div>
-          </div>
-        </div>
-      </div>
-  <!-- <% }) %> -->
-    </div>
-
 
 
 
