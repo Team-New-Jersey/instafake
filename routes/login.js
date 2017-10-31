@@ -38,7 +38,11 @@ module.exports = function(passport) {
 			    if (loginErr) {
 					return next(loginErr);
 			    } 
+
 				res.cookie('jwt', user.token);
+				res.cookie('username', user.username);
+				res.cookie('userid', user.id);
+ 
 				return res.redirect('/api/protected/');
 			}); 
 		})(req, res, next);
