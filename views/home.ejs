@@ -9,13 +9,22 @@
   </head>
   <body>
     <div id="feed">
+    <script>
+       <% postIds.forEach(function(post) {
+        var postIdIndex = postIds.indexOf(post);
+        var theUserId = postUserIds[postIdIndex];
+        var userIdIndex = userIds.indexOf(theUserId);
+        var findName = usernames[userIdIndex];
+      });
+        %>
+      </script>
         <div id="post-1">
           <div class="post-head">
             <div class="user-1-thumbnail">
                 <a href="profile.ejs"><img src="/images/User-1.jpg" alt="User 1"/></a>
             </div>
             <div class="user">
-              <h3>User 1</h3>
+              <h3><%= findName %></h3>
             </div>
           </div>
           <div class="post-body">
@@ -28,85 +37,38 @@
             <div class="buttons">
                 <button type="button">Edit</button>
                     <button type="button" onclick="submitdata();">Delete</button>
-                      <script>
-                        $(function() {
-                          $(".del").on("click", function() {
-                            $.ajax({
-                              // append with correct url
-                              url: "../api/protected",
-                              method: "DELETE", // use "GET" if server does not handle DELETE
-                              data: { "post_id": $(this).data("id") },
-                              dataType: "html"
-                            }).done(function( msg ) {
-                              $( "#log" ).html( msg );
-                            }).fail(function( jqXHR, textStatus ) {
-                              alert( "Request failed: " + textStatus );
-                            });
-                          });
-                        });
-                      </script>
                 </div>
             </div>
               <div id="holder">
-                <script = text/javascript>
-                    $(".like-Unlike").click(function(e) {
-                      if ($(this).html() == "Like") {
-                          $(this).html('Unlike');
-                      }
-                      else {
-                          $(this).html('Like');
-                      }
-                      return false;
-                    });​
-                </script>
-                <div class="box entypo-thumbs-up"> Like</div>
-                <script>
-                // var Likes needs to be defined
-                  var likesOnPost = Likes.filter(function(post_id) {
-                      return post_id.value === 1;
-                  });
-                </script>
+                <div id="form">
+                  <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
+                    <div>
+                      <label>Like</label>
+                      <input type="button" value="Like">
+                    </div>
+                  </form>
+                </div>
+                <!-- <div class="box entypo-thumbs-up"> Like</div> -->
               </div>
               <div id="comments">
-                <FORM action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-                <p>Comment: <INPUT type="text" maxlength="400"></p>
-                </FORM>
-                <script = text/javascript>
-                  $(function() {
-                    //alter with appropriate path to file with the ?jsoncallback=? callback
-                    $.getJSON("comments.php?jsoncallback=?", function(data) {
-                      for (var x = 0; x < data.length; x++) {
-                        var div = $("<div>").addClass("row").appendTo("#comments");
-                        $("<label>").text(data[x].username).appendTo(div);
-                        $("<div>").addClass("comment").text(data[x].comment).appendTo(div);
-                      }
-                    });
-                  });
-
-                  $("#add").keyup(function() {
-                    if (event.keyCode === 13) {
-                      $("#id_of_button").click();
-                    };
-                    var ajaxOpts = {
-                      type: "post",
-                      // update with appropriate path to file
-                      url: "/api/protected/",
-                      data: "&author=" + $("#leaveComment").find("input").val() + "&comment=" + $("#leaveComment").find("textarea").val(),
-                      success: function(data) {
-                        var div = $("<div>").addClass("row").appendTo("#comments");
-                        $("<label>").text($("#leaveComment").find("input").val()).appendTo(div);
-                        $("<div>").addClass("comment").text($("#leaveComment").find("textarea").val()).appendTo(div);
-                      }
-                    };
-
-                    $.ajax(ajaxOpts);
-                  });
+                <div id="form">
+                  <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
+                    <div class="commentinfo">
+                      <label>Comment:</label>
+                      <input type="text" name="comment"/><br/>
+                    </div>
+                    <div>
+                      <input type="submit"/>
+                    </div>
+                  </form>
+                </div>
                 </script>
               </div>
               </div>
               </div>
             </div>
           </div>
+      <!-- <% }) %> -->
         </div>
 
         <div id="post-2">
@@ -115,7 +77,7 @@
                 <a href="profile.ejs"><img src="/images/User-1.jpg" alt="User 1"/></a>
             </div>
             <div class="user">
-              <h3>User 1</h3>
+              <h3><%= findName %></h3>
             </div>
           </div>
           <div class="post-body">
@@ -127,88 +89,40 @@
           <div class="post-bottom">
             <div class="buttons">
                 <button type="button">Edit</button>
-                    <button type="button" onclick="submitdata();">Delete</button>
-                      <script>
-                        $(function() {
-                          $(".del").on("click", function() {
-                            $.ajax({
-                              // append with correct url
-                              url: "../api/protected",
-                              method: "DELETE", // use "GET" if server does not handle DELETE
-                              data: { "post_id": $(this).data("id") },
-                              dataType: "html"
-                            }).done(function( msg ) {
-                              $( "#log" ).html( msg );
-                            }).fail(function( jqXHR, textStatus ) {
-                              alert( "Request failed: " + textStatus );
-                            });
-                          });
-                        });
-                      </script>
+                <button type="button" onclick="submitdata();">Delete</button>
+            </div>
+        </div>
+          <div id="holder">
+            <div id="form">
+              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
+                <div>
+                  <label>Like</label>
+                  <input type="button" value="Like">
                 </div>
+              </form>
             </div>
-            <div id="holder">
-              <script>
-                $(".like-Unlike").click(function(e) {
-                    if ($(this).html() == "Like") {
-                        $(this).html('Unlike');
-                    }
-                    else {
-                        $(this).html('Like');
-                    }
-                    return false;
-                });​
-              </script>
-              <div class="box entypo-thumbs-up"> Like</div>
-              <script>
-                // var Likes needs to be defined
-                var likesOnPost = Likes.filter(function(post_id) {
-                    return post_id.value === 2;
-                });
-              </script>
+            <!-- <div class="box entypo-thumbs-up"> Like</div> -->
+          </div>
+          <div id="comments">
+            <div id="form">
+              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
+                <div class="commentinfo">
+                  <label>Comment:</label>
+                  <input type="text" name="comment"/><br/>
+                </div>
+                <div>
+                  <input type="submit"/>
+                </div>
+              </form>
             </div>
-            <div id="comments">
-              <FORM action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-              <p>Comment: <INPUT type="text" maxlength="400"></p>
-              </FORM>
-              <script>
-                $(function() {
-                  //alter with appropriate path to file with the ?jsoncallback=? callback
-                  $.getJSON("comments.php?jsoncallback=?", function(data) {
-                    for (var x = 0; x < data.length; x++) {
-                      var div = $("<div>").addClass("row").appendTo("#comments");
-                      $("<label>").text(data[x].username).appendTo(div);
-                      $("<div>").addClass("comment").text(data[x].comment).appendTo(div);
-                    }
-                  });
-                });
-
-                $("#add").keyup(function() {
-                  if (event.keyCode === 13) {
-                    $("#id_of_button").click();
-                  };
-                  var ajaxOpts = {
-                    type: "post",
-                    // update with appropriate path to file
-                    url: "/api/protected/",
-                    data: "&author=" + $("#leaveComment").find("input").val() + "&comment=" + $("#leaveComment").find("textarea").val(),
-                    success: function(data) {
-                      var div = $("<div>").addClass("row").appendTo("#comments");
-                      $("<label>").text($("#leaveComment").find("input").val()).appendTo(div);
-                      $("<div>").addClass("comment").text($("#leaveComment").find("textarea").val()).appendTo(div);
-                    }
-                  };
-
-                  $.ajax(ajaxOpts);
-                });
-
-              </script>
-            </div>
-            </div>
-            </div>
+            </script>
+          </div>
+          </div>
           </div>
         </div>
       </div>
+  <!-- <% }) %> -->
+    </div>
 
   <!-- images resized in .post-box (css)  -->
         <div id="post-3">
@@ -217,7 +131,7 @@
                 <a href="profile.ejs"><img src="/images/User-2.jpg" alt="User 2"/></a>
             </div>
             <div class="user">
-              <h3>User 2</h3>
+              <h3><%= findName %></h3>
             </div>
           </div>
           <div class="post-body">
@@ -229,88 +143,40 @@
           <div class="post-bottom">
             <div class="buttons">
                 <button type="button">Edit</button>
-                    <button type="button" onclick="submitdata();">Delete</button>
-                      <script>
-                        $(function() {
-                          $(".del").on("click", function() {
-                            $.ajax({
-                              // append with correct url
-                              url: "../api/protected",
-                              method: "DELETE", // use "GET" if server does not handle DELETE
-                              data: { "post_id": $(this).data("id") },
-                              dataType: "html"
-                            }).done(function( msg ) {
-                              $( "#log" ).html( msg );
-                            }).fail(function( jqXHR, textStatus ) {
-                              alert( "Request failed: " + textStatus );
-                            });
-                          });
-                        });
-                      </script>
+                <button type="button" onclick="submitdata();">Delete</button>
+            </div>
+        </div>
+          <div id="holder">
+            <div id="form">
+              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
+                <div>
+                  <label>Like</label>
+                  <input type="button" value="Like">
                 </div>
+              </form>
             </div>
-            <div id="holder">
-              <script>
-                $(".like-Unlike").click(function(e) {
-                    if ($(this).html() == "Like") {
-                        $(this).html('Unlike');
-                    }
-                    else {
-                        $(this).html('Like');
-                    }
-                    return false;
-                });​
-              </script>
-              <div class="box entypo-thumbs-up"> Like</div>
-              <script>
-                // var Likes needs to be defined
-                var likesOnPost = Likes.filter(function(post_id) {
-                    return post_id.value === 3;
-                });
-              </script>
+            <!-- <div class="box entypo-thumbs-up"> Like</div> -->
+          </div>
+          <div id="comments">
+            <div id="form">
+              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
+                <div class="commentinfo">
+                  <label>Comment:</label>
+                  <input type="text" name="comment"/><br/>
+                </div>
+                <div>
+                  <input type="submit"/>
+                </div>
+              </form>
             </div>
-            <div id="comments">
-              <FORM action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-              <p>Comment: <INPUT type="text" maxlength="400"></p>
-              </FORM>
-              <script>
-                $(function() {
-                  //alter with appropriate path to file with the ?jsoncallback=? callback
-                  $.getJSON("comments.php?jsoncallback=?", function(data) {
-                    for (var x = 0; x < data.length; x++) {
-                      var div = $("<div>").addClass("row").appendTo("#comments");
-                      $("<label>").text(data[x].username).appendTo(div);
-                      $("<div>").addClass("comment").text(data[x].comment).appendTo(div);
-                    }
-                  });
-                });
-
-                $("#add").keyup(function() {
-                  if (event.keyCode === 13) {
-                    $("#id_of_button").click();
-                  };
-                  var ajaxOpts = {
-                    type: "post",
-                    // update with appropriate path to file
-                    url: "/api/protected/",
-                    data: "&author=" + $("#leaveComment").find("input").val() + "&comment=" + $("#leaveComment").find("textarea").val(),
-                    success: function(data) {
-                      var div = $("<div>").addClass("row").appendTo("#comments");
-                      $("<label>").text($("#leaveComment").find("input").val()).appendTo(div);
-                      $("<div>").addClass("comment").text($("#leaveComment").find("textarea").val()).appendTo(div);
-                    }
-                  };
-
-                  $.ajax(ajaxOpts);
-                });
-
-              </script>
-            </div>
-            </div>
-            </div>
+            </script>
+          </div>
+          </div>
           </div>
         </div>
       </div>
+  <!-- <% }) %> -->
+    </div>
 
 
         <div id="post-4">
@@ -319,7 +185,7 @@
                 <a href="profile.ejs"><img src="/images/User-3.jpg" alt="User 3"/></a>
             </div>
             <div class="user">
-              <h3>User 3</h3>
+              <h3><%= findName %></h3>
             </div>
           </div>
           <div class="post-body">
@@ -331,97 +197,43 @@
           <div class="post-bottom">
             <div class="buttons">
                 <button type="button">Edit</button>
-                    <button type="button" onclick="submitdata();">Delete</button>
-                      <script>
-                        $(function() {
-                          $(".del").on("click", function() {
-                            $.ajax({
-                              // append with correct url
-                              url: "../api/protected",
-                              method: "DELETE", // use "GET" if server does not handle DELETE
-                              data: { "post_id": $(this).data("id") },
-                              dataType: "html"
-                            }).done(function( msg ) {
-                              $( "#log" ).html( msg );
-                            }).fail(function( jqXHR, textStatus ) {
-                              alert( "Request failed: " + textStatus );
-                            });
-                          });
-                        });
-                      </script>
+                <button type="button" onclick="submitdata();">Delete</button>
+            </div>
+        </div>
+          <div id="holder">
+            <div id="form">
+              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
+                <div>
+                  <label>Like</label>
+                  <input type="button" value="Like">
                 </div>
+              </form>
             </div>
-            <div id="holder">
-              <script>
-                $(function(){
-                  $('.box').on('click',function(){
-                    if ($(this).text()==' Like'){
-                      $(this).removeClass('entypo-thumbs-up').addClass('entypo-thumbs-down').text(' Dislike');
-                    }else{
-                      $(this).removeClass('entypo-thumbs-down').addClass('entypo-thumbs-up').text(' Like');
-                    }
-                  });
-                });
-              </script>
-              <div class="box entypo-thumbs-up"> Like</div>
-              <script>
-                // var Likes needs to be defined
-                var likesOnPost = Likes.filter(function(post_id) {
-                    return post_id.value === 4;
-                });
-              </script>
+            <!-- <div class="box entypo-thumbs-up"> Like</div> -->
+          </div>
+          <div id="comments">
+            <div id="form">
+              <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
+                <div class="commentinfo">
+                  <label>Comment:</label>
+                  <input type="text" name="comment"/><br/>
+                </div>
+                <div>
+                  <input type="submit"/>
+                </div>
+              </form>
             </div>
-            <div id="comments">
-              <FORM action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-              <p>Comment: <INPUT type="text" maxlength="400"></p>
-              </FORM>
-              <script>
-                $(function() {
-                  //alter with appropriate path to file with the ?jsoncallback=? callback
-                  $.getJSON("comments.php?jsoncallback=?", function(data) {
-                    for (var x = 0; x < data.length; x++) {
-                      var div = $("<div>").addClass("row").appendTo("#comments");
-                      $("<label>").text(data[x].username).appendTo(div);
-                      $("<div>").addClass("comment").text(data[x].comment).appendTo(div);
-                    }
-                  });
-                });
-
-                $("#add").keyup(function() {
-                  if (event.keyCode === 13) {
-                    $("#id_of_button").click();
-                  };
-                  var ajaxOpts = {
-                    type: "post",
-                    // update with appropriate path to file
-                    url: "/api/protected/",
-                    data: "&author=" + $("#leaveComment").find("input").val() + "&comment=" + $("#leaveComment").find("textarea").val(),
-                    success: function(data) {
-                      var div = $("<div>").addClass("row").appendTo("#comments");
-                      $("<label>").text($("#leaveComment").find("input").val()).appendTo(div);
-                      $("<div>").addClass("comment").text($("#leaveComment").find("textarea").val()).appendTo(div);
-                    }
-                  };
-
-                  $.ajax(ajaxOpts);
-                });
-
-              </script>
-            </div>
-            </div>
-            </div>
+            </script>
+          </div>
+          </div>
           </div>
         </div>
       </div>
+  <!-- <% }) %> -->
+    </div>
 
 
 
-        <!-- post.description (in % ) -->
-        <!--for likes, likesFindAll true with correct image_id & username to display users  -->
-        <!--for comments, display all with correct image_id with comment and timestamp  -->
-        <!-- FOR ALL OF THESE, check with Ajax on whether or not the GET method changes  -->
-        <!-- also are we forgoing proflie pictures? becasue we'd have to insert a new column in the users table -->
-        <!-- in order to call it on the home page...unless we just use the same picutre in the code -->
 
       </div>
     </div>
