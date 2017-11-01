@@ -11,7 +11,32 @@ app.use(passport.initialize());
 
 require('./strategies/passport-local')(passport);
 require('./strategies/passport-jwt')(passport);
+// function logResponseBody(req, res, next) {
+//   var oldWrite = res.write,
+//       oldEnd = res.end;
 
+//   var chunks = [];
+
+//   res.write = function (chunk) {
+//     chunks.push(new Buffer(chunk));
+
+//     oldWrite.apply(res, arguments);
+//   };
+
+//   res.end = function (chunk) {
+//     if (chunk)
+//       chunks.push(new Buffer(chunk));
+
+//     var body = Buffer.concat(chunks).toString('utf8');
+//     console.log(req.path, body);
+
+//     oldEnd.apply(res, arguments);
+//   };
+
+//   next();
+// }
+
+// app.use(logResponseBody);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended: true } ));

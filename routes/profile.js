@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 var models = require('../db');
+var fs = require('fs');
+var dir = './tmp';
 
 
 var User = require('../db').users;
@@ -12,6 +14,12 @@ var User = require('../db').users;
 
 var myStorage = multer.diskStorage({
 	destination: function (req, file, cb) {
+		cb(null, __dirname + '/../public/images/user-images'),
+		// var lgdUserDir = './';
+
+		// if (!fs.existsSync(dir)){
+  //   		fs.mkdirSync(dir);
+		// }
 		cb(null, __dirname + '/../public/images/user-images')
 	},
 	filename: function (req, file, cb) {

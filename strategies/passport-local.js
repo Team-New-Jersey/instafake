@@ -59,7 +59,8 @@ function processSignupCallback(req, username, password, done) {
   	});
 }
 
-function processLoginCallback(username, password, done) {   
+function processLoginCallback(username, password, done) {
+   
 	User.findOne({        
 		where: { 
 			'username' :  username         

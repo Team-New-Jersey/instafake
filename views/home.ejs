@@ -1,13 +1,15 @@
-<!DOCTYPE html>
+
 <html>
   <head>
       <meta charset="UTF-8">
       <title>Instafake</title>
       <link rel="stylesheet" href="/stylesheets/home.css"/>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+      <script src="/public/js/request.js"></script>
       <% include ./partials/_header.ejs %>
   </head>
   <body>
+
     <div id="feed">
        <% postIds.forEach(function(post) {
         var postIdIndex = postIds.indexOf(post);
@@ -16,26 +18,56 @@
         var findName = usernames[userIdIndex];
         %>
         <div id="post-1">
+
+      <!-- <header>
+      <div class="head">
+        <h2>Empty</h2>
+      </div>
+      </header> -->
+      <div id="feed">
+        <% 
+        
+        postIds.forEach(function(posted) { 
+        
+        
+            var postIdIndex = postIds.indexOf(posted); //which row is the posts id in
+            var theUserId = postUserIds[postIdIndex]; // corresponding user_id
+            var userIdIndex = userIds.indexOf(theUserId); // which row is the users id in
+            var findName = usernames[userIdIndex]; // corresponding username 
+            var idString = postIds.indexOf(posted);
+            var buttonId = "likeButton" + idString.toString();
+            var h3Id = "getIt" + idString.toString();
+          %>
+        <div id="post-1"><% posted %>
           <div class="post-head">
             <div class="user-1-thumbnail">
                 <a href="profile.ejs"><img src="/images/User-1.jpg" alt="User 1"/></a>
             </div>
             <div class="user">
+
               <h3><%= findName %></h3>
+
+              <h3 id=<%- h3Id %>><%= posted  %></h3>
+>>>>>>> updated home .ejs to loop through array, update html ids in loop with post_id
             </div>
           </div>
           <div class="post-body">
             <a href="profile.ejs" class="post-box"><img src="/images/Post-1.jpg" alt="Tracks!"/></a>
           </div>
+<<<<<<< HEAD
           <div class="post-description">
             <p> Tracks! </p>
           </div>
-          <div class="post-bottom">
+            <div class="post-bottom">
             <div class="buttons">
                 <button type="button">Edit</button>
-                    <button type="button" onclick="submitdata();">Delete</button>
-                </div>
+                <button type="button">Delete</button>
             </div>
+             <form action = "/api/protected/meGusto" method = "post">
+
+              <input id=<%= buttonId %> type="submit" name= "post" />
+            </form>
+    
               <div id="holder">
                 <div id="form">
                   <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
@@ -65,7 +97,7 @@
               </div>
             </div>
           </div>
-      <% }); %>
+      <% }) %>
         </div>
 
 
@@ -79,6 +111,6 @@
       </footer>
 
 
+<a href="/logout">Log Out</a>
 
-  </body>
-</html>
+<a href="/api/protected/profile">Profile</a>
