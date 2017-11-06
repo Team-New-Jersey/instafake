@@ -22,8 +22,7 @@ var myStorage = multer.diskStorage({
 		cb(null, __dirname + '/../public/images'),
 		cb(null, __dirname + '/../public/images/user' + lgdUserDir)
 	},
-	filename: function (req, file, cb) {
-		console.log(cb);
+	filename: function (req, file, cb) { 
 		cb(null, file.fieldname + '-' + Date.now() + '.' + file.mimetype.split('/')[1]);
 	}
 });
