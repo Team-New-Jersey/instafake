@@ -66,7 +66,7 @@ app.use('/api/protected/', function(req, res, next) {
 });
 
 app.use('/api/protected/', homeRoutes);
-app.use('/api/protected/', profileRoutes);
+app.use('/api/protected/profile', profileRoutes);
 app.use('/api/protected', logoutRoutes);
 
 app.use('/api/*', function(req, res, next) {

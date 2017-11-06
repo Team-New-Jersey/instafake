@@ -2,69 +2,53 @@ var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 var models = require('../db');
+var Posts = require('../db').posts;
 var fs = require('fs');
-var dir = './tmp';
 
 
 var User = require('../db').users;
 
-	router.get('/profile', function(req, res) {
-		res.render('profile');
-	});
+
+var lgdUserDir;
 
 var myStorage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, __dirname + '/../public/images/user-images'),
-		// var lgdUserDir = './';
-
-		// if (!fs.existsSync(dir)){
-  //   		fs.mkdirSync(dir);
-		// }
-		cb(null, __dirname + '/../public/images/user-images')
+		
+		lgdUserDir = req.cookies['userid'];
+		var dir = './public/images/user' + lgdUserDir;
+		if (!fs.existsSync(dir)){
+    		fs.mkdirSync(dir);
+		}
+		cb(null, __dirname + '/../public/images'),
+		cb(null, __dirname + '/../public/images/user' + lgdUserDir)
 	},
 	filename: function (req, file, cb) {
-		cb(null, file.fieldname + '-' + Date.now() + '.' + file.mimetype.split('/')[1])
+		console.log(cb);
+		cb(null, file.fieldname + '-' + Date.now() + '.' + file.mimetype.split('/')[1]);
 	}
 });
 
+var requestHandler = multer({ storage: myStorage });
 
+router.get('/', function(req, res) {
+	res.render('profile');
+});
 
-var upload = multer({ storage: myStorage })
-//
-// router.get('/create', function(req, res, next) {
-// 	res.render('product/create', {title: 'User Image Create', nav: 'Create'})
-// });
-
-// router.post('/create', upload.single('productImage'), function(req, res, next) {
-//
-// 	//call the sharp() function passing in the image we want to resize
-// 	sharp(__dirname + '/../public/images/user-images/' + req.file.filename)
-//
-// 	// ignoreAspectRatio will not crop the image to fit the desired size
-// 	.ignoreAspectRatio()
-//
-// 	// resize image to these dimensions (w x h) in pixels
-// 	.resize(200, 200)
-//
-// router.post('/create', requestHandler.single('userImage'),
-//     function(req, res, next) {
-// 			.toFile(__dirname + '/../public/images/user-images/thumbnails/' + req.file.filename, (err, info) => {
-// 				posts.addPost(req.body, req.file.filename)
-// 				res.redirect('/');
-				// what do you use to show the result of create on the refreshed page...
-		// 	});
-		// });
-// 
-//
-// router.get('/:post_id', function(req, res, next) {
-// 	var product = products.findById(req.params.id);
-// 	res.render('post/show', {post: post, title: 'Product Details', nav: 'Product'})
-// });
-
-
-
-
-
-
+router.post('/', requestHandler.single('image'), function(req, res, next) {
+	// var lgdUserId = req.cookies['userid'];
+	// console.log(req.file.fieldname);
+	Posts.create({
+		description : req.body.description,
+		user_id : lgdUserId
+	}).then((post) => {
+		console.log("hello")
+	});
+	next();
+	res.redirect('/api/protected/profile');
+});
 
 module.exports = router;
+
+
+
+
