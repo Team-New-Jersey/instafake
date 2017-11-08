@@ -11,26 +11,25 @@
     <% postIds.forEach(function(posted) { //Going to make these variables a lot simpler with _.lodash, using _.zip and _.zipObject
       var postIdIndex = postIds.indexOf(posted); //which row is the posts id in
       var theUserId = postUserIds[postIdIndex]; // corresponding user_id
+      var theDescription = postDescriptions[postIdIndex];
+      var theImage = postImg[postIdIndex];
       var userIdIndex = userIds.indexOf(theUserId); // which row is the users id in
       var findName = usernames[userIdIndex]; // corresponding username 
-      var idString = postIds.indexOf(posted); 
-      var buttonId = "likeButton" + idString.toString();
-      var h3Id = "getIt" + idString.toString(); %>
+       %>
       <div id="post-1">
         <div class="post-head">
           <div class="user-1-thumbnail">
-            <a href="profile.ejs"><img src="/images/User-1.jpg" alt="User 1"/></a>
+            <a href="profile.ejs"><img src="/images/User-2.jpg" alt="User 1"/></a>
           </div>
           <div class="user">
             <h3><%= findName %></h3>
-            <h3 id='<%= h3Id %>'><%= posted  %></h3>
           </div>
         </div>
         <div class="post-body">
-          <a href="profile.ejs" class="post-box"><img src="/images/Post-1.jpg" alt="Tracks!"/></a>
+          <a href="profile.ejs" class="post-box"><img src="/images/<%= theImage %>" alt="Tracks!"/></a>
         </div>
         <div class="post-description">
-          <p> Tracks! </p>
+          <p><%= theDescription %></p>
         </div>
         <div class="post-bottom">
           <div class="buttons">
@@ -39,7 +38,7 @@
           </div>
           <form action = "/api/protected/" method = "post">
               <input type="hidden" name="postId" value="<%= posted %>"> 
-              <input id='<% buttonId %>' type="submit" name= "<% posted %>" />
+              <input id="yeah" type="submit" name= "<% posted %>" />
           </form>
         </div>
       </div>

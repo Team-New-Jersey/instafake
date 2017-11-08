@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var http = require('http');
 var pg = require('pg');
-// var _ = require('lodash');
+var _ = require('lodash');
 require('./login');
 
 var pool = new pg.Pool({
@@ -10,7 +10,7 @@ var pool = new pg.Pool({
 	user: 'postgres',
 	port: 1234,
 	database: 'instabase',
-	password: ''
+	password: 'Coyot3$mith!511'
 });
 
 var User = require('../db').users;
@@ -25,7 +25,7 @@ router.get('/', function(req, res, next) {
 	
 	pool.connect(function(err, client, done) {
 		if(err) throw err;
-		client.query('SELECT ARRAY (SELECT id FROM users); SELECT ARRAY (SELECT username FROM users); SELECT ARRAY (SELECT id FROM posts); SELECT ARRAY (SELECT user_id FROM posts); SELECT ARRAY (SELECT description FROM posts); SELECT ARRAY (SELECT id FROM likes); SELECT * FROM likes WHERE post_id IN (SELECT post_id FROM likes GROUP BY post_id having count(*) > 2); SELECT ARRAY (SELECT user_id FROM likes); SELECT ARRAY (SELECT post_id FROM likes); SELECT ARRAY (SELECT id FROM comments); SELECT ARRAY (SELECT comment FROM comments); SELECT ARRAY (SELECT user_id FROM comments); SELECT ARRAY (SELECT post_id FROM comments)',
+		client.query('SELECT ARRAY (SELECT id FROM users); SELECT ARRAY (SELECT username FROM users); SELECT ARRAY (SELECT id FROM posts); SELECT ARRAY (SELECT user_id FROM posts); SELECT ARRAY (SELECT description FROM posts); SELECT ARRAY (SELECT img_name FROM posts); SELECT ARRAY (SELECT id FROM likes); SELECT * FROM likes WHERE post_id IN (SELECT post_id FROM likes GROUP BY post_id having count(*) > 2); SELECT ARRAY (SELECT user_id FROM likes); SELECT ARRAY (SELECT post_id FROM likes); SELECT ARRAY (SELECT id FROM comments); SELECT ARRAY (SELECT comment FROM comments); SELECT ARRAY (SELECT user_id FROM comments); SELECT ARRAY (SELECT post_id FROM comments)',
 			(err, result) => {
  			if (err) {
    	 			throw err
@@ -36,19 +36,20 @@ router.get('/', function(req, res, next) {
   			var postIds = result[2].rows[0].array;
   			var postUserIds = result[3].rows[0].array;
   			var postDescriptions = result[4].rows[0].array;
-  			var likeIds = result[5].rows[0].array;
-  			var likesPerPost = result[6].rows;
-  			var likeUserIds = result[7].rows[0].array;
-  			var likePostIds = result[8].rows[0].array;
-  			var commentIds = result[9].rows[0].array;
-  			var commentBodies = result[10].rows[0].array;
-  			var commentUserIds = result[11].rows[0].array;
-  			var commentPostIds = result[12].rows[0].array;
-
-  			// var usersArray = _.zip(userIds, usernames);
-  			// var postsArray = _.zip(postIds, postUserIds, postDescriptions);
-  			// var likesArray = _.zip(likeUserIds, likePostIds);
-  			
+  			var postImg = result[5].rows[0].array;
+  			var likeIds = result[6].rows[0].array;
+  			var likesPerPost = result[7].rows;
+  			var likeUserIds = result[8].rows[0].array;
+  			var likePostIds = result[9].rows[0].array;
+  			var commentIds = result[10].rows[0].array;
+  			var commentBodies = result[11].rows[0].array;
+  			var commentUserIds = result[12].rows[0].array;
+  			var commentPostIds = result[13].rows[0].array;
+  			// post_id to user_id to username
+  			// post_id to description
+  			// post_id to imgName
+  			// post_id to find all likes with post_id to find like with user_id to username with user_id
+  			// post_id to find all comments with post_id to find comment with user_id to username with user_id
 			res.render('home', {
 		    	lgdUserId: lgdUserId,
 		    	lgdUsername: lgdUsername,
@@ -57,6 +58,7 @@ router.get('/', function(req, res, next) {
 		    	postIds: postIds,
 		    	postUserIds: postUserIds,
 		    	postDescriptions: postDescriptions,
+		    	postImg: postImg,
 		    	likeIds: likeIds,
 		    	likesPerPost: likesPerPost,
 		    	likeUserIds: likeUserIds,
@@ -72,7 +74,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-	console.log(req.body.postId); // req.body mapped to 
+	lgdUserId = req.cookies['userid'];
+	likeIt.create({
+		user_id : lgdUserId,
+		post_id : req.body.postId
+	});
+	res.redirect('/api/protected/');
 });
 
 module.exports = router;
