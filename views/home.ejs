@@ -33,8 +33,13 @@
         </div>
         <div class="post-bottom">
           <div class="buttons">
-            <button type="button">Edit</button>
-            <button type="button">Delete</button>
+            <form action = "/api/protected/comment" method = "post">
+              <input type="text" id="postComment" maxlength="150" placeholder="Comment" name="comment">
+              <div>
+                <input type="hidden" name="postIdComment" value="<%= posted %>">
+                <input type="submit" value="Comment"/>
+              </div>
+            </form>
           </div>
           <form action = "/api/protected/" method = "post">
               <input type="hidden" name="postId" value="<%= posted %>"> 

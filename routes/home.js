@@ -10,11 +10,12 @@ var pool = new pg.Pool({
 	user: 'postgres',
 	port: 1234,
 	database: 'instabase',
-	password: 'Coyot3$mith!511'
+	password: ''
 });
 
 var User = require('../db').users;
 var likeIt = require('../db').likes;
+var Comment = require('../db').comments;
 var lgdUserId;
 var lgdUsername;
 
@@ -73,11 +74,22 @@ router.get('/', function(req, res, next) {
 	});
 });
 
+
 router.post('/', function(req, res, next) {
 	lgdUserId = req.cookies['userid'];
 	likeIt.create({
 		user_id : lgdUserId,
 		post_id : req.body.postId
+	});
+	res.redirect('/api/protected/');
+});
+
+router.post('/comment', function(req, res, next) {
+	lgdUserId = req.cookies['userid'];
+	Comment.create({
+		comment : req.body.comment,
+		user_id : lgdUserId,
+		post_id : req.body.postIdComment
 	});
 	res.redirect('/api/protected/');
 });

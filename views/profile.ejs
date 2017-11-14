@@ -49,246 +49,45 @@
   </div>
 
   <div id="feed">
+    <% postIds.forEach(function(posted) { //Going to make these variables a lot simpler with _.lodash, using _.zip and _.zipObject
+      var postIdIndex = postIds.indexOf(posted); //which row is the posts id in
+      var theUserId = postUserIds[postIdIndex]; // corresponding user_id
+      var theDescription = postDescriptions[postIdIndex];
+      var theImage = postImg[postIdIndex];
+      var userIdIndex = userIds.indexOf(theUserId); // which row is the users id in
+      var findName = usernames[userIdIndex]; // corresponding username 
+       %>
       <div id="post-1">
         <div class="post-head">
           <div class="user-1-thumbnail">
-              <a href="/api/protected/profile"><img src="/images/User-1.jpg" alt="User 1"/></a>
+            <a href="profile.ejs"><img src="/images/User-2.jpg" alt="User 1"/></a>
           </div>
           <div class="user">
-            <h3>User 1</h3>
+            <h3><%= findName %></h3>
           </div>
         </div>
         <div class="post-body">
-          <a href="profile.ejs" class="post-box"><img src="/images/Post-1.jpg" alt="Tracks!"/></a>
+          <a href="profile.ejs" class="post-box"><img src="/images/<%= theImage %>" alt="Tracks!"/></a>
         </div>
         <div class="post-description">
-          <p> Tracks! </p>
-          <div class="buttons">
-            <!-- <form>
-              <button name="Edit" type="edit" value="HTML"</button>
-            </form> -->
-              <button onClick="appendText()" id="button_click">Edit </button>
-                <!-- <script>
-                  function appendText(){
-
-                          var text = document.getElementById('desciprtion').value;
-
-                              if ( document.getElementById('description').value ){
-
-                                  var div = document.createElement('div');
-                                  div.className = 'divex';
-
-                                  var li = document.createElement('li');
-                                  li.setAttribute('id', 'list');
-                                  div.appendChild(li);
-
-                                  var texty = document.createTextNode(text);
-                                  var bigdiv = document.getElementById('addedText');
-
-                                  var editbutton = document.createElement('BUTTON');
-                                  editbutton.setAttribute('id', 'button_click');
-                                  var buttontext = document.createTextNode('Edit');
-                                  editbutton.appendChild(buttontext);
-
-                                  var makeAreaEditable = function(){
-                                              function myFunction(e){
-                                                  var objLi = e.currentTarget;
-                                                  objLi.value = objLi.customProperty;
-                                                  document.getElementByID("button_click").value = "ok";
-                                              };
-                                              var textareaEdit = document.createElement('textarea');
-                                              textareaEdit.customProperty = li.value;
-                                              textareaEdit.onclick = myFunction;
-                                              bigdiv.appendChild(li).appendChild(textareaEdit);
-                                          };
-                                  editbutton.onclick = makeAreaEditable;
-                                  bigdiv.appendChild(li).appendChild(texty);
-                                  bigdiv.appendChild(li).appendChild(editbutton);
-                                  document.getElementById('usertext').value = "";
-                          }
-                  };
-                </script> -->
-              <button type="button" onclick="submitdata();">Delete</button>
-                <script>
-                  $(function() {
-                    $(".del").on("click", function() {
-                      $.ajax({
-                        // append with correct url
-                        url: "../api/protected",
-                        method: "DELETE", // use "GET" if server does not handle DELETE
-                        data: { "post_id": $(this).data("id") },
-                        dataType: "html"
-                      }).done(function( msg ) {
-                        $( "#log" ).html( msg );
-                      }).fail(function( jqXHR, textStatus ) {
-                        alert( "Request failed: " + textStatus );
-                      });
-                    });
-                  });
-                </script>
-          </div>
+          <p><%= theDescription %></p>
         </div>
         <div class="post-bottom">
-            <div id="holder">
-              <script = text/javascript>
-                  $(".like-Unlike").click(function(e) {
-                    if ($(this).html() == "Like") {
-                        $(this).html('Unlike');
-                    }
-                    else {
-                        $(this).html('Like');
-                    }
-                    return false;
-                  });​
-              </script>
-              <div class="box entypo-thumbs-up"> Like</div>
-              <script>
-                var filteredArray = YourArray.filter(function(post_id) {
-                    return post_id.value === 1;
-                });
-              </script>
-            </div>
-            <div id="comments">
-              <FORM action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-              <p>Comment: <INPUT type="text" maxlength="400"></p>
-              </FORM>
-              <script = text/javascript>
-                $(function() {
-                  //alter with appropriate path to file with the ?jsoncallback=? callback
-                  $.getJSON("comments.php?jsoncallback=?", function(data) {
-                    for (var x = 0; x < data.length; x++) {
-                      var div = $("<div>").addClass("row").appendTo("#comments");
-                      $("<label>").text(data[x].username).appendTo(div);
-                      $("<div>").addClass("comment").text(data[x].comment).appendTo(div);
-                    }
-                  });
-                });
-
-                $("#add").keyup(function() {
-                  if (event.keyCode === 13) {
-                    $("#id_of_button").click();
-                  };
-                  var ajaxOpts = {
-                    type: "post",
-                    // update with appropriate path to file
-                    url: "/api/protected/",
-                    data: "&author=" + $("#leaveComment").find("input").val() + "&comment=" + $("#leaveComment").find("textarea").val(),
-                    success: function(data) {
-                      var div = $("<div>").addClass("row").appendTo("#comments");
-                      $("<label>").text($("#leaveComment").find("input").val()).appendTo(div);
-                      $("<div>").addClass("comment").text($("#leaveComment").find("textarea").val()).appendTo(div);
-                    }
-                  };
-
-                  $.ajax(ajaxOpts);
-                });
-              </script>
-            </div>
-            </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="post-2">
-        <div class="post-head">
-          <div class="user-1-thumbnail">
-              <a href="profile.ejs"><img src="/images/User-1.jpg" alt="User 1"/></a>
-          </div>
-          <div class="user">
-            <h3>User 1</h3>
-          </div>
-        </div>
-        <div class="post-body">
-          <a href="profile.ejs" class="post-box"><img src="/images/Post-2.jpg" alt="Camel"/></a>
-        </div>
-        <div class="post-description">
-          <p> Camel? </p>
           <div class="buttons">
-              <button type="button">Edit</button>
-              <button type="button" onclick="submitdata();">Delete</button>
-                <script>
-                  $(function() {
-                    $(".del").on("click", function() {
-                      $.ajax({
-                        // append with correct url
-                        url: "../api/protected",
-                        method: "DELETE", // use "GET" if server does not handle DELETE
-                        data: { "post_id": $(this).data("id") },
-                        dataType: "html"
-                      }).done(function( msg ) {
-                        $( "#log" ).html( msg );
-                      }).fail(function( jqXHR, textStatus ) {
-                        alert( "Request failed: " + textStatus );
-                      });
-                    });
-                  });
-                </script>
+            <form action = "/api/protected/profile/edit" method = "post">
+              <input type="text" id="editDescription" maxlength="150" placeholder="New Description" name="edit">
+              <div>
+                <input type="hidden" name="postIdEdit" value="<%= posted %>">
+                <input type="submit" value="Edit"/>    
+              </div>
+            </form>
+            <form action = "/api/protected/profile/delete" method = "post">
+              <input type="hidden" name="postIdDelete" value="<%= posted %>"> 
+              <input type="hidden" name="fileName" value="<%= theImage %>"> 
+              <input id="yeah" type="submit" value="Delete" />
+            </form>
           </div>
         </div>
-        <div class="post-bottom">
-          <div id="holder">
-            <script>
-              $(function(){
-                $('.box').on('click',function(){
-                  if ($(this).text()==' Like'){
-                    $(this).removeClass('entypo-thumbs-up').addClass('entypo-thumbs-down').text(' Dislike');
-                  }else{
-                    $(this).removeClass('entypo-thumbs-down').addClass('entypo-thumbs-up').text(' Like');
-                  }
-                });
-              });
-            </script>
-            <div class="box entypo-thumbs-up"> Like</div>
-            <script>
-              var filteredArray = YourArray.filter(function(post_id) {
-                  return post_id.value === 1;
-              });
-            </script>
-          </div>
-          <div id="comments">
-            <FORM action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-            <p>Comment: <INPUT type="text" maxlength="400"></p>
-            </FORM>
-            <script>
-              $(function() {
-                //alter with appropriate path to file with the ?jsoncallback=? callback
-                $.getJSON("comments.php?jsoncallback=?", function(data) {
-                  for (var x = 0; x < data.length; x++) {
-                    var div = $("<div>").addClass("row").appendTo("#comments");
-                    $("<label>").text(data[x].username).appendTo(div);
-                    $("<div>").addClass("comment").text(data[x].comment).appendTo(div);
-                  }
-                });
-              });
-
-              $("#add").keyup(function() {
-                if (event.keyCode === 13) {
-                  $("#id_of_button").click();
-                };
-                var ajaxOpts = {
-                  type: "post",
-                  // update with appropriate path to file
-                  url: "/api/protected/",
-                  data: "&author=" + $("#leaveComment").find("input").val() + "&comment=" + $("#leaveComment").find("textarea").val(),
-                  success: function(data) {
-                    var div = $("<div>").addClass("row").appendTo("#comments");
-                    $("<label>").text($("#leaveComment").find("input").val()).appendTo(div);
-                    $("<div>").addClass("comment").text($("#leaveComment").find("textarea").val()).appendTo(div);
-                  }
-                };
-
-                $.ajax(ajaxOpts);
-              });
-
-            </script>
-          </div>
-          </div>
-          </div>
-        </div>
-      </div>
+    <% }) %>
     </div>
-  </div>
-</body>
-
 </html>
