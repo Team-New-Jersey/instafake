@@ -5,7 +5,7 @@ var pg = require('pg');
 var _ = require('lodash');
 require('./login');
 
-var pool = new pg.Pool({
+var pool = new pg.Pool ({
 	host: 'localhost',
 	user: 'postgres',
 	port: 1234,
@@ -52,6 +52,8 @@ router.get('/', function(req, res, next) {
   			// post_id to find all likes with post_id to find like with user_id to username with user_id
   			// post_id to find all comments with post_id to find comment with user_id to username with user_id
 			res.render('home', {
+				Comment: Comment,
+				_ : _,
 		    	lgdUserId: lgdUserId,
 		    	lgdUsername: lgdUsername,
 		    	userIds: userIds,
@@ -77,9 +79,21 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 	lgdUserId = req.cookies['userid'];
-	likeIt.create({
-		user_id : lgdUserId,
-		post_id : req.body.postId
+	likeIt.findOne({ where: {user_id : lgdUserId , post_id : req.body.postId} }).then(function(postLike) {
+  		if (postLike) {
+  			likeIt.destroy({
+  				where: {
+  					user_id : lgdUserId,
+					post_id : req.body.postId
+				}
+  			})
+  		}
+  		else {
+			likeIt.create({
+				user_id : lgdUserId,
+				post_id : req.body.postId
+			})
+		};
 	});
 	res.redirect('/api/protected/');
 });

@@ -8,14 +8,61 @@
   </head>
   <body>
     <div id="feed">
-    <% postIds.forEach(function(posted) { //Going to make these variables a lot simpler with _.lodash, using _.zip and _.zipObject
-      var postIdIndex = postIds.indexOf(posted); //which row is the posts id in
-      var theUserId = postUserIds[postIdIndex]; // corresponding user_id
-      var theDescription = postDescriptions[postIdIndex];
-      var theImage = postImg[postIdIndex];
-      var userIdIndex = userIds.indexOf(theUserId); // which row is the users id in
-      var findName = usernames[userIdIndex]; // corresponding username 
-       %>
+    <%  postIds.forEach(function(posted) { //Going to make these variables a lot simpler with _.lodash, using _.zip and _.zipObject
+          var postIdIndex = postIds.indexOf(posted); //which row is the posts id in
+          var theUserId = postUserIds[postIdIndex]; // corresponding user_id
+          var theDescription = postDescriptions[postIdIndex];
+          var theImage = postImg[postIdIndex];
+          var userIdIndex = userIds.indexOf(theUserId); // which row is the users id in
+          var findName = usernames[userIdIndex]; // corresponding username 
+
+          var commentIndices = [];
+          for(var i=0; i<commentPostIds.length;i++) {
+            if (commentPostIds[i] === posted) commentIndices.push(i);
+          }
+          var theComments = [];
+          for(var j=0; j<commentIndices.length; j++) {
+            theComments.push(commentBodies[commentIndices[j]]);
+          }
+          var theCommentUserIds = [];
+          for(var k=0; k<commentIndices.length; k++) {
+            theCommentUserIds.push(commentUserIds[commentIndices[k]]);
+          }
+          var usernameIndices = [];
+          for(var l=0; l<theCommentUserIds.length; l++) {
+            usernameIndices.push(userIds.indexOf(theCommentUserIds[l]));
+          }
+          var theCommentsUsername = [];
+          for(var m=0; m<usernameIndices.length; m++) {
+            theCommentsUsername.push(usernames[usernameIndices[m]]);
+          }
+          var usernameToComments = _.zip(theCommentsUsername, theComments);
+          
+          var commentSection = [];
+          for(var n=0; n<usernameToComments.length; n++) {
+            commentSection.push(usernameToComments[n].join(" : "));
+          }
+          console.log(commentSection);
+          var likesIndices = [];
+          for(var o=0; o<likePostIds.length; o++) {
+            if(likePostIds[o] === posted) likesIndices.push(o);
+          }
+          var theLikeUserIds = [];
+          for(var p=0; p<likesIndices.length; p++) {
+            theLikeUserIds.push(likeUserIds[likesIndices[p]]);
+          }
+          var usernameLikesIndices = [];
+          for(var q=0; q<theLikeUserIds.length; q++) {
+            usernameLikesIndices.push(userIds.indexOf(theLikeUserIds[q]));
+          }
+
+          var usernameLikes = [];
+          for(var r=0; r<usernameLikesIndices.length; r++) {
+            usernameLikes.push(usernames[usernameLikesIndices[r]]);
+          }
+          console.log(usernameLikes);
+
+    %>
       <div id="post-1">
         <div class="post-head">
           <div class="user-1-thumbnail">
@@ -43,8 +90,18 @@
           </div>
           <form action = "/api/protected/" method = "post">
               <input type="hidden" name="postId" value="<%= posted %>"> 
-              <input id="yeah" type="submit" name= "<% posted %>" />
+              <input id="yeah" type="submit" value="Like" />
           </form>
+          <h3>Liked by</h3>
+          <% for(var s=0; s<usernameLikes.length; s++) {%>
+          <p><%= usernameLikes[s] %></p>
+          <% } %>
+          <h3>Comments</h3>
+          <ul>
+            <% for(var t=0; t<commentSection.length; t++) {%>
+            <li><%= commentSection[t] %></li>
+            <% } %>
+          </ul>
         </div>
       </div>
     <% }) %>
