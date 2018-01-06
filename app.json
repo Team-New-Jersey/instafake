@@ -1,0 +1,6 @@
+{
+  "name": "instafake",
+  "description": "NYCDA PTWDI Instagram Clone",
+  "repository": "https://github.com/Team-New-Jersey/instafake",
+  "keywords": ["node", "express", "static"]
+}
