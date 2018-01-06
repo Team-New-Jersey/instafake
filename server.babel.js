@@ -110,6 +110,6 @@ if (app.get('env') === 'development') {
 
 module.exports = app;
 
-app.listen(4000, function() {
+app.listen(process.env.PORT || 4000, function() {
   console.log('App is listening on port 4000!');
 });
