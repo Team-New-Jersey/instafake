@@ -1,1 +1,1 @@
-web: node server.babel.js
+web: node server.js
