@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var connection = require('./sql.js');
+connection.sync();
 
 var app = express();
 app.use(passport.initialize());
@@ -107,9 +109,11 @@ if (app.get('env') === 'development') {
   });
 }
 
+connection.sync().then(function() {
+  console.log("Database ready");
+  app.listen(process.env.PORT || 4000, function() {
+    console.log("Listening at 4000");
+  });
+});
 
 module.exports = app;
-
-app.listen(process.env.PORT || 4000, function() {
-  console.log('App is listening on port 4000!');
-});
