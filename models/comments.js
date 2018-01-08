@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     comment: {
       type: DataTypes.TEXT,
-      allowNulle: false
+      allowNull: false
     }
   }, {
     classMethods: {
