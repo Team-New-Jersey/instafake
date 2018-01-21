@@ -5,41 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var connection = require('./sql.js');
-const env = require('dotenv').load();
-connection.sync();
+// const env = require('dotenv').load();
 
 var app = express();
 app.use(passport.initialize());
 
 require('./strategies/passport-local')(passport);
 require('./strategies/passport-jwt')(passport);
-// function logResponseBody(req, res, next) {
-//   var oldWrite = res.write,
-//       oldEnd = res.end;
 
-//   var chunks = [];
-
-//   res.write = function (chunk) {
-//     chunks.push(new Buffer(chunk));
-
-//     oldWrite.apply(res, arguments);
-//   };
-
-//   res.end = function (chunk) {
-//     if (chunk)
-//       chunks.push(new Buffer(chunk));
-
-//     var body = Buffer.concat(chunks).toString('utf8');
-//     console.log(req.path, body);
-
-//     oldEnd.apply(res, arguments);
-//   };
-
-//   next();
-// }
-
-// app.use(logResponseBody);
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( { extended: true } ));
@@ -72,22 +45,22 @@ app.use('/api/protected/', homeRoutes);
 app.use('/api/protected/profile', profileRoutes);
 app.use('/api/protected', logoutRoutes);
 
-const { Client } = require('pg');
+// const { Client } = require('pg');
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
+// const client = new Client({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: true,
+// });
 
-client.connect();
+// client.connect();
 
-client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-  if (err) throw err;
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }
-  client.end();
-});
+// client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
+//   if (err) throw err;
+//   for (let row of res.rows) {
+//     console.log(JSON.stringify(row));
+//   }
+//   client.end();
+// });
 
 app.use('/api/*', function(req, res, next) {
   var err = new Error('Not Found');
@@ -127,11 +100,7 @@ if (app.get('env') === 'production') {
   });
 }
 
-connection.sync().then(function() {
-  console.log("Database ready");
-  app.listen(process.env.PORT || 4000, function() {
-    console.log("Listening at 4000");
-  });
-});
+const port = process.env.PORT || 4000;
+app.listen(port);
 
 module.exports = app;

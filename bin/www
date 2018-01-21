@@ -1,14 +1,15 @@
-var app = require('../server');
-var models = require("../db");
-var debug = require('debug')('create:server');
+let app = require('../server');
+let models = require("../db");
+let debug = require('debug')('create:server');
 
+var server = http.createServer(app);
 
-var port = normalizePort(process.env.PORT || '4000');
+let port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+  let port = parseInt(val, 10);
 
   if (isNaN(port)) {
     // named pipe
@@ -26,7 +27,7 @@ function normalizePort(val) {
 console.log('sync...')
 models.sequelize.sync().then(function () {
     console.log('start server...')
-    var server = app.listen(app.get('port'), function() {
+    let server = app.listen(app.get('port'), function() {
       console.log('Server listening on localhost:' + server.address().port);
     });
 });

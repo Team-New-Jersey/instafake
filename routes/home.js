@@ -6,11 +6,11 @@ var _ = require('lodash');
 require('./login');
 
 var pool = new pg.Pool ({
-	host: 'localhost',
-	user: 'postgres',
-	port: 1234,
-	database: 'instabase',
-	password: 'Coyot3$mith!511'
+	user: 'nbzqgbjjhvtkmj',
+    password: '91ba656ed565b1cf6b5787ba7887833912e08e76cf48cfe69715a7292c43d349',
+    host: 'ec2-107-22-183-40.compute-1.amazonaws.com',
+    port: 5432,
+    database: 'da9k3p78krq5vv'
 });
 
 var User = require('../db').users;
