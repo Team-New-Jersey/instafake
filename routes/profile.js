@@ -9,11 +9,11 @@ var Comment = require('../db').comments;
 var iLike = require('../db').likes;
 
 var pool = new pg.Pool({
-    user: 'nbzqgbjjhvtkmj',
-    password: '91ba656ed565b1cf6b5787ba7887833912e08e76cf48cfe69715a7292c43d349',
-    host: 'ec2-107-22-183-40.compute-1.amazonaws.com',
+    user: 'pvswpjtuimldnh',
+    password: 'fad3cd7f7b89d6098d063a417646cea42b727afd3fb1d48953c65ed88b58afee',
+    host: 'ec2-54-235-73-241.compute-1.amazonaws.com',
     port: 5432,
-    database: 'da9k3p78krq5vv'
+    database: 'd9ev6uhm5gsgaj'
 });
 
 var lgdUserId;

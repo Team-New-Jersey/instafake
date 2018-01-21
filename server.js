@@ -3,6 +3,6 @@ require('babel-register');
 
 var app = require('./server.babel');
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('postgres://nbzqgbjjhvtkmj:91ba656ed565b1cf6b5787ba7887833912e08e76cf48cfe69715a7292c43d349@ec2-107-22-183-40.compute-1.amazonaws.com:5432/da9k3p78krq5vv');
+var sequelize = new Sequelize('postgres://pvswpjtuimldnh:fad3cd7f7b89d6098d063a417646cea42b727afd3fb1d48953c65ed88b58afee@ec2-54-235-73-241.compute-1.amazonaws.com:5432/d9ev6uhm5gsgaj');
 
 module.exports = app;
