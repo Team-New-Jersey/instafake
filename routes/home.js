@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+require('dotenv').config();
 var http = require('http');
 var pg = require('pg');
 var _ = require('lodash');

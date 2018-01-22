@@ -7,6 +7,7 @@ var User = require('../db').users;
 var Posts = require('../db').posts;
 var Comment = require('../db').comments;
 var iLike = require('../db').likes;
+require('dotenv').config();
 const aws = require('aws-sdk');
 const s3 = new aws.S3();
 const multerS3 = require('multer-s3');
