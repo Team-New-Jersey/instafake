@@ -5,9 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-const aws = require('aws-sdk');
-const s3 = new aws.S3();
-require('dotenv').config();
+require('dotenv').load();
 
 var app = express();
 app.use(passport.initialize());
