@@ -28,25 +28,31 @@ var uploadAWS = multer({
 	storage: multerS3({
 		s3: s3,
         bucket: 'instafake',
-        acl: 'public-read',
-        location: 'https://s3.amazonaws.com/instafake/',
+        // acl: 'public-read',
+        // location: 'https://s3.amazonaws.com/instafake/',
         metadata: function (req, file, cb) {
-            var lgdUserDir = req.cookies['userid'];
-			var dir = 'images/user' + lgdUserDir;
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString())
+    }
+  //       metadata: function (req, file, cb) {
+  //           var lgdUserDir = req.cookies['userid'];
+		// 	var dir = 'images/user' + lgdUserDir;
 
-			if (!fs.existsSync(dir)){
-    			fs.mkdirSync(dir);
-			}
-			cb(null, dir)
-        },
-        key: function (req, file, cb) {
-            function genRand() {
-      			return Math.floor(Math.random()*89999999+10000000);
-   			};
-   			var imgNum = genRand();
+		// 	if (!fs.existsSync(dir)){
+  //   			fs.mkdirSync(dir);
+		// 	}
+		// 	cb(null, dir)
+  //       },
+  //       key: function (req, file, cb) {
+  //           function genRand() {
+  //     			return Math.floor(Math.random()*89999999+10000000);
+  //  			};
+  //  			var imgNum = genRand();
 
-			cb(null, file.fieldname + imgNum + '.' + file.mimetype.split('/')[1]);
-		}
+		// 	cb(null, file.fieldname + imgNum + '.' + file.mimetype.split('/')[1]);
+		// }
         
 	// destination: function (req, file, cb) {
 	// 	var lgdUserDir = req.cookies['userid'];
@@ -106,14 +112,14 @@ router.post('/', uploadAWS.single('image'), function(req, res, next) {
 
 	var lgdUserId = req.cookies['userid'];
 	var createdImg = req.file.filename;
-	var location = req.file.location + createdImg;
+	// var location = req.file.location + createdImg;
 
-	fs.createReadStream('images/user' + lgdUserId + '/' + createdImg).pipe(fs.createWriteStream('images/' + createdImg));
+	// fs.createReadStream('images/user' + lgdUserId + '/' + createdImg).pipe(fs.createWriteStream('images/' + createdImg));
 
 	Posts.create({
 		description : req.body.description,
 		user_id : lgdUserId,
-		img_name : location
+		img_name : req.file.location
 	});
 
 	res.redirect('/api/protected/profile');
