@@ -10,6 +10,7 @@ var iLike = require('../db').likes;
 require('dotenv').config();
 const aws = require('aws-sdk');
 const s3 = new aws.S3();
+aws.config.region = 'us-east-1';
 const multerS3 = require('multer-s3');
 
 var pool = new pg.Pool({
@@ -26,15 +27,17 @@ var lgdUsername;
 var uploadAWS = multer({
 	storage: multerS3({
 		s3: s3,
-        bucket: "instafake",
+        bucket: 'instafake',
+        acl: 'public-read',
+        location: 'https://s3.amazonaws.com/instafake/',
         metadata: function (req, file, cb) {
             var lgdUserDir = req.cookies['userid'];
-			var dir = './public/images/user' + lgdUserDir;
+			var dir = 'images/user' + lgdUserDir;
 
 			if (!fs.existsSync(dir)){
     			fs.mkdirSync(dir);
 			}
-			cb(null, __dirname + '/public/images/user' + lgdUserDir)
+			cb(null, dir)
         },
         key: function (req, file, cb) {
             function genRand() {
@@ -103,13 +106,14 @@ router.post('/', uploadAWS.single('image'), function(req, res, next) {
 
 	var lgdUserId = req.cookies['userid'];
 	var createdImg = req.file.filename;
+	var location = req.file.location + createdImg;
 
-	fs.createReadStream('public/images/user' + lgdUserId + '/' + createdImg).pipe(fs.createWriteStream('public/images/' + createdImg));
+	fs.createReadStream('images/user' + lgdUserId + '/' + createdImg).pipe(fs.createWriteStream('images/' + createdImg));
 
 	Posts.create({
 		description : req.body.description,
 		user_id : lgdUserId,
-		img_name : req.file.filename
+		img_name : location
 	});
 
 	res.redirect('/api/protected/profile');
@@ -147,8 +151,8 @@ router.post('/delete', function(req, res, next) {
 		}
 	});
 
-	fs.unlink("./public/images/" + req.body.fileName);
-	fs.unlink("./public/images/user" + lgdUserId + "/" + req.body.fileName);
+	fs.unlink("images/" + req.body.fileName);
+	fs.unlink("images/user" + lgdUserId + "/" + req.body.fileName);
 
 	res.redirect('/api/protected/profile');
 });
