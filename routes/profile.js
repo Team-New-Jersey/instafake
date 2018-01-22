@@ -7,42 +7,63 @@ var User = require('../db').users;
 var Posts = require('../db').posts;
 var Comment = require('../db').comments;
 var iLike = require('../db').likes;
+const aws = require('aws-sdk');
+const s3 = new aws.S3();
+const multerS3 = require('multer-s3');
 
 var pool = new pg.Pool({
-    user: 'pvswpjtuimldnh',
-    password: 'fad3cd7f7b89d6098d063a417646cea42b727afd3fb1d48953c65ed88b58afee',
-    host: 'ec2-54-235-73-241.compute-1.amazonaws.com',
+    user: process.env.HEROKU_DB_USER,
+    password: process.env.HEROKU_DB_PW,
+    host: process.env.HEROKU_DB_HOST,
     port: 5432,
-    database: 'd9ev6uhm5gsgaj'
+    database: process.env.HEROKU_DB_NAME
 });
 
 var lgdUserId;
 var lgdUsername;
 
-var myStorage = multer.diskStorage({
+var myStorage = multer({
+	storage: multerS3({
+		s3: s3,
+        bucket: "instafake",
+        metadata: function (req, file, cb) {
+            var lgdUserDir = req.cookies['userid'];
+			var dir = './public/images/user' + lgdUserDir;
 
-	destination: function (req, file, cb) {
-		var lgdUserDir = req.cookies['userid'];
-		var dir = './public/images/user' + lgdUserDir;
+			if (!fs.existsSync(dir)){
+    			fs.mkdirSync(dir);
+			}
+			cb(null, __dirname + '/../public/images/user' + lgdUserDir)
+        },
+        key: function (req, file, cb) {
+            function genRand() {
+      			return Math.floor(Math.random()*89999999+10000000);
+   			};
+   			var imgNum = genRand();
 
-		if (!fs.existsSync(dir)){
-    		fs.mkdirSync(dir);
+			cb(null, file.fieldname + imgNum + '.' + file.mimetype.split('/')[1]);
 		}
-		cb(null, __dirname + '/../public/images/user' + lgdUserDir)
-	},
+        
+	// destination: function (req, file, cb) {
+	// 	var lgdUserDir = req.cookies['userid'];
+	// 	var dir = './public/images/user' + lgdUserDir;
 
-	filename: function (req, file, cb) { 
-		function genRand() {
-      		return Math.floor(Math.random()*89999999+10000000);
-   		};
-   		var imgNum = genRand();
+	// 	if (!fs.existsSync(dir)){
+ //    		fs.mkdirSync(dir);
+	// 	}
+	// 	cb(null, __dirname + '/../public/images/user' + lgdUserDir)
+	// },
 
-		cb(null, file.fieldname + imgNum + '.' + file.mimetype.split('/')[1]);
-	}
+	// filename: function (req, file, cb) { 
+	// 	function genRand() {
+ //      		return Math.floor(Math.random()*89999999+10000000);
+ //   		};
+ //   		var imgNum = genRand();
 
+	// 	cb(null, file.fieldname + imgNum + '.' + file.mimetype.split('/')[1]);
+	// }
+}),
 });
-
-var requestHandler = multer({ storage: myStorage });
 
 router.get('/', function(req, res) {
 
@@ -77,7 +98,7 @@ router.get('/', function(req, res) {
 	});
 });
 
-router.post('/', requestHandler.single('image'), function(req, res, next) {
+router.post('/', uploadAWS.single('image'), function(req, res, next) {
 
 	var lgdUserId = req.cookies['userid'];
 	var createdImg = req.file.filename;

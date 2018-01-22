@@ -6,11 +6,11 @@ var _ = require('lodash');
 require('./login');
 
 var pool = new pg.Pool ({
-	user: 'pvswpjtuimldnh',
-    password: 'fad3cd7f7b89d6098d063a417646cea42b727afd3fb1d48953c65ed88b58afee',
-    host: 'ec2-54-235-73-241.compute-1.amazonaws.com',
+	user: process.env.HEROKU_DB_USER,
+    password: process.env.HEROKU_DB_PW,
+    host: process.env.HEROKU_DB_HOST,
     port: 5432,
-    database: 'd9ev6uhm5gsgaj'
+    database: process.env.HEROKU_DB_NAME
 });
 
 var User = require('../db').users;
