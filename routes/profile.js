@@ -23,7 +23,7 @@ var pool = new pg.Pool({
 var lgdUserId;
 var lgdUsername;
 
-var myStorage = multer({
+var uploadAWS = multer({
 	storage: multerS3({
 		s3: s3,
         bucket: "instafake",
