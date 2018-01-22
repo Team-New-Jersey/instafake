@@ -45,14 +45,14 @@ app.use('/api/protected/', homeRoutes);
 app.use('/api/protected/profile', profileRoutes);
 app.use('/api/protected', logoutRoutes);
 
-// const { Client } = require('pg');
+const { Client } = require('pg');
 
-// const client = new Client({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: true,
-// });
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
 
-// client.connect();
+client.connect();
 
 // client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
 //   if (err) throw err;

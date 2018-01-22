@@ -28,7 +28,7 @@ var uploadAWS = multer({
 	storage: multerS3({
 		s3: s3,
         bucket: 'instafake',
-        // acl: 'public-read',
+        acl: 'public-read',
         // location: 'https://s3.amazonaws.com/instafake/',
         metadata: function (req, file, cb) {
         	console.log(file.fieldname);
