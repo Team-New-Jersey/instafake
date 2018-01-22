@@ -34,7 +34,7 @@ var uploadAWS = multer({
 			if (!fs.existsSync(dir)){
     			fs.mkdirSync(dir);
 			}
-			cb(null, __dirname + '/../public/images/user' + lgdUserDir)
+			cb(null, __dirname + '/public/images/user' + lgdUserDir)
         },
         key: function (req, file, cb) {
             function genRand() {
