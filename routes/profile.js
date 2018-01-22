@@ -31,6 +31,7 @@ var uploadAWS = multer({
         // acl: 'public-read',
         // location: 'https://s3.amazonaws.com/instafake/',
         metadata: function (req, file, cb) {
+        	console.log(file.fieldname);
       cb(null, {fieldName: file.fieldname});
     },
     key: function (req, file, cb) {
