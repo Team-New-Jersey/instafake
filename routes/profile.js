@@ -158,7 +158,7 @@ router.post('/', requestHandler.single('image'), function(req, res, next) {
 	Posts.create({
 		description : req.body.description,
 		user_id : lgdUserId,
-		img_name : req.file.filename
+		img_name : req.file.location
 	});
 
 	res.redirect('/api/protected/profile');
