@@ -25,7 +25,7 @@ var pool = new pg.Pool({
 var lgdUserId;
 var lgdUsername;
 
-exports.uploadFile = function (req, res) {
+var uploadFile = function(req, res) {
     var item = req.body;
     var upload = multer({
         storage: multerS3({
