@@ -151,14 +151,14 @@ router.post('/', requestHandler.single('image'), function(req, res, next) {
 
 	var lgdUserId = req.cookies['userid'];
 	var createdImg = req.file.filename;
-	var location = req.file.location + createdImg;
+	// var location = req.file.location + createdImg;
 
-	fs.createReadStream('images/user' + lgdUserId + '/' + createdImg).pipe(fs.createWriteStream('images/' + createdImg));
+	// fs.createReadStream('images/user' + lgdUserId + '/' + createdImg).pipe(fs.createWriteStream('images/' + createdImg));
 
 	Posts.create({
 		description : req.body.description,
 		user_id : lgdUserId,
-		img_name : req.file.location
+		img_name : createdImg
 	});
 
 	res.redirect('/api/protected/profile');
