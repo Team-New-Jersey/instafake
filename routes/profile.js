@@ -55,7 +55,7 @@ var myStorage = multerS3({
     },
     key: function (req, file, cb) {
     	var lgdUserDir = req.cookies['userid'];
-        cb(null, 'images' + lgdUserDir + '/' + Date.now().toString());
+        cb(null, 'images' + lgdUserDir + '/' + Date.now().toString() '.jpg');
     }
 });
 
