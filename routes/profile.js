@@ -55,7 +55,7 @@ var myStorage = multerS3({
     },
     key: function (req, file, cb) {
     	var lgdUserDir = req.cookies['userid'];
-        cb(null, 'images' + lgdUserDir + '/' + Date.now().toString() + '.jpg');
+        cb(null, 'instafake/images' + lgdUserDir + '/' + Date.now().toString() + '.jpg');
     }
 });
 
@@ -195,9 +195,6 @@ router.post('/delete', function(req, res, next) {
 			id : req.body.postIdDelete
 		}
 	});
-
-	fs.unlink("images/" + req.body.fileName);
-	fs.unlink("images/user" + lgdUserId + "/" + req.body.fileName);
 
 	res.redirect('/api/protected/profile');
 });
