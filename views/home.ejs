@@ -1,14 +1,13 @@
 <html>
   <head>
-      <meta charset="UTF-8">
-      <title>Instafake</title>
-      <link rel="stylesheet" href="/stylesheets/home.css"/>
-      
-      <% include ./partials/_header.ejs %>
+    <meta charset="UTF-8">
+    <title>Instafake</title>
+    <link rel="stylesheet" href="/stylesheets/home.css"/> 
+    <% include ./partials/_header.ejs %>
   </head>
   <body>
     <div id="feed">
-    <%  postIds.forEach(function(posted) { //Going to make these variables a lot simpler with _.lodash, using _.zip and _.zipObject
+    <%  postIds.forEach(function(posted) {
           var postIdIndex = postIds.indexOf(posted); //which row is the posts id in
           var theUserId = postUserIds[postIdIndex]; // corresponding user_id
           var theDescription = postDescriptions[postIdIndex];
@@ -61,7 +60,6 @@
             usernameLikes.push(usernames[usernameLikesIndices[r]]);
           }
           console.log(usernameLikes);
-
     %>
       <div id="post-1">
         <div class="post-head">
@@ -73,7 +71,7 @@
           </div>
         </div>
         <div class="post-body">
-          <a href="profile.ejs" class="post-box"><img src="/images/<%= theImage %>" alt="Tracks!"/></a>
+          <a href="profile.ejs" class="post-box"><img src="<%= theImage %>" alt="Tracks!"/></a>
         </div>
         <div class="post-description">
           <p><%= theDescription %></p>
@@ -106,39 +104,6 @@
       </div>
     <% }) %>
     </div>
-
-        <!--       <div id="holder">
-                <div id="form">
-                  <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-                    <div>
-                      <label>Like</label>
-                      <input type="button" value="Like">
-                    </div>
-                  </form>
-                </div>
-                <! <div class="box entypo-thumbs-up"> Like</div> -->
-             <!--  </div>
-              <div id="comments">
-                <div id="form">
-                  <form action="/api/" method="post" enctype="application/x-www-form-urlencoded">
-                    <div class="commentinfo">
-                      <label>Comment:</label>
-                      <input type="text" name="comment"/><br/>
-                    </div>
-                    <div>
-                      <input type="submit"/>
-                    </div>
-                  </form>
-                </div>
-                </script>
-              </div>
-              </div>
-              </div>
-            </div>
-          </div> --> 
+  </body>
+</html>
       
-
-
-
-
-

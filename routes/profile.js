@@ -25,28 +25,6 @@ var pool = new pg.Pool({
 var lgdUserId;
 var lgdUsername;
 
-// var myStorage = multer.diskStorage({
-
-// 	destination: function (req, file, cb) {
-// 		var lgdUserDir = req.cookies['userid'];
-// 		var dir = './public/images/user' + lgdUserDir;
-
-// 		if (!fs.existsSync(dir)){
-//     		fs.mkdirSync(dir);
-// 		}
-// 		cb(null, __dirname + '/../public/images/user' + lgdUserDir)
-// 	},
-
-// 	filename: function (req, file, cb) { 
-// 		function genRand() {
-//       		return Math.floor(Math.random()*89999999+10000000);
-//    		};
-//    		var imgNum = genRand();
-
-// 		cb(null, file.fieldname + imgNum + '.' + file.mimetype.split('/')[1]);
-// 	}
-
-// });
 var myStorage = multerS3({
     s3: s3,
     bucket: 'instafake',
@@ -61,59 +39,6 @@ var myStorage = multerS3({
 });
 
 var requestHandler = multer({ storage: myStorage });
-
-// var uploadAWS = multer({
-// 	storage: multerS3({
-// 		s3: s3,
-//         bucket: 'instafake',
-//         acl: 'public-read',
-//         // location: 'https://s3.amazonaws.com/instafake/',
-//         metadata: function (req, file, cb) {
-//         	console.log(file.fieldname);
-//       cb(null, {fieldName: file.fieldname});
-//     },
-//     key: function (req, file, cb) {
-//       cb(null, Date.now().toString())
-//     }
-// }),
-// });
-  //       metadata: function (req, file, cb) {
-  //           var lgdUserDir = req.cookies['userid'];
-		// 	var dir = 'images/user' + lgdUserDir;
-
-		// 	if (!fs.existsSync(dir)){
-  //   			fs.mkdirSync(dir);
-		// 	}
-		// 	cb(null, dir)
-  //       },
-  //       key: function (req, file, cb) {
-  //           function genRand() {
-  //     			return Math.floor(Math.random()*89999999+10000000);
-  //  			};
-  //  			var imgNum = genRand();
-
-		// 	cb(null, file.fieldname + imgNum + '.' + file.mimetype.split('/')[1]);
-		// }
-        
-	// destination: function (req, file, cb) {
-	// 	var lgdUserDir = req.cookies['userid'];
-	// 	var dir = './public/images/user' + lgdUserDir;
-
-	// 	if (!fs.existsSync(dir)){
- //    		fs.mkdirSync(dir);
-	// 	}
-	// 	cb(null, __dirname + '/../public/images/user' + lgdUserDir)
-	// },
-
-	// filename: function (req, file, cb) { 
-	// 	function genRand() {
- //      		return Math.floor(Math.random()*89999999+10000000);
- //   		};
- //   		var imgNum = genRand();
-
-	// 	cb(null, file.fieldname + imgNum + '.' + file.mimetype.split('/')[1]);
-	// }
-
 
 router.get('/', function(req, res) {
 
@@ -152,9 +77,6 @@ router.post('/', requestHandler.single('image'), function(req, res, next) {
 
 	var lgdUserId = req.cookies['userid'];
 	var createdImg = req.file.filename;
-	// var location = req.file.location + createdImg;
-
-	// fs.createReadStream('images/user' + lgdUserId + '/' + createdImg).pipe(fs.createWriteStream('images/' + createdImg));
 
 	Posts.create({
 		description : req.body.description,
@@ -201,7 +123,3 @@ router.post('/delete', function(req, res, next) {
 });
 
 module.exports = router;
-
-
-
-

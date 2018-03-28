@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-      <meta charset="UTF-8">
-      <title>Instafake</title>
-      <link rel="stylesheet" href="/stylesheets/profile.css"/>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-      <% include ./partials/_header.ejs %>
+    <meta charset="UTF-8">
+    <title>Instafake</title>
+    <link rel="stylesheet" href="/stylesheets/profile.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <% include ./partials/_header.ejs %>
   </head>
   <body>
     <div id="userProfile">
       <div class="user-profile-thumbnail">
         <a href="/api/protected/profile"><img src="/images/User-2.jpg" alt="User 1"/></a>
       </div>
-      <h2> User 1 </h2>
+      <h2><%= lgdUsername %></h2>
     </div>
     <div id="form">
       <form class="form-horizontal" method="POST" action="/api/protected/profile" enctype="multipart/form-data">
@@ -37,7 +37,7 @@
     </div>
 
     <div id="feed">
-      <% postIds.forEach(function(posted) { //Going to make these variables a lot simpler with _.lodash, using _.zip and _.zipObject
+      <% postIds.forEach(function(posted) {
         var postIdIndex = postIds.indexOf(posted); //which row is the posts id in
         var theUserId = postUserIds[postIdIndex]; // corresponding user_id
         var theDescription = postDescriptions[postIdIndex];
@@ -79,6 +79,5 @@
       </div>
       <% }) %>
     </div>
-  <!--   <script src="js/uploadErrorHandler.js"></script> -->
   </body>
 </html>
