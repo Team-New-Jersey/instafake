@@ -54,8 +54,12 @@ var myStorage = multerS3({
         cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
+    	function genRand() {
+      		return Math.floor(Math.random()*89999999+10000000);
+   		};
+   		var imgNum = genRand();
     	var lgdUserDir = req.cookies['userid'];
-        cb(null, 'instafake/images' + lgdUserDir + '/' + Date.now().toString() + '.jpg');
+        cb(null, 'instafake/images' + lgdUserDir + '/' + imgNum + '.jpg');
     }
 });
 
