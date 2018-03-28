@@ -51,23 +51,11 @@ var myStorage = multerS3({
     s3: s3,
     bucket: 'instafake',
     metadata: function (req, file, cb) {
-        var lgdUserDir = req.cookies['userid'];
-		var dir = '/images/user' + lgdUserDir;
-
-		if (!fs.existsSync(dir)){
-    		fs.mkdirSync(dir);
-    		cb(null, __dirname + '/images/user' + lgdUserDir);
-		} else {
-			cb(null, __dirname + '/images/user' + lgdUserDir);
-		}
+        cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-        function genRand() {
-      		return Math.floor(Math.random()*89999999+10000000);
-   		};
-   		var imgNum = genRand();
-
-		cb(null, file.fieldname + imgNum + '.' + file.mimetype.split('/')[1]);
+    	var lgdUserDir = req.cookies['userid'];
+        cb(null, 'images' + lgdUserDir + '/' + Date.now().toString());
     }
 });
 
