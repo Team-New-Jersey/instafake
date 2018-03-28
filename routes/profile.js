@@ -8,10 +8,11 @@ var Posts = require('../db').posts;
 var Comment = require('../db').comments;
 var iLike = require('../db').likes;
 require('dotenv').config();
-const aws = require('aws-sdk');
-const s3 = new aws.S3();
-aws.config.region = 'us-east-1';
-const multerS3 = require('multer-s3');
+var multerS3 = require('multer-s3');
+var AWS = require('aws-sdk');
+
+AWS.config.loadFromPath('./s3_config.json');
+var s3 = new AWS.S3();
 
 var pool = new pg.Pool({
     user: process.env.HEROKU_DB_USER,
@@ -24,19 +25,36 @@ var pool = new pg.Pool({
 var lgdUserId;
 var lgdUsername;
 
-var uploadAWS = multer({
-	storage: multerS3({
-		s3: s3,
-        bucket: 'instafake',
-        acl: 'public-read',
-        // location: 'https://s3.amazonaws.com/instafake/',
-        metadata: function (req, file, cb) {
-        	console.log(file.fieldname);
-      cb(null, {fieldName: file.fieldname});
-    },
-    key: function (req, file, cb) {
-      cb(null, Date.now().toString())
-    }
+exports.uploadFile = function (req, res) {
+    var item = req.body;
+    var upload = multer({
+        storage: multerS3({
+            s3: s3,
+            bucket: 'instafake',
+            metadata: function (req, file, cb) {
+                cb(null, { fieldName: file.fieldname });
+            },
+            key: function (req, file, cb) {
+                cb(null, Date.now().toString())
+            }
+        })
+    })
+}
+// var uploadAWS = multer({
+// 	storage: multerS3({
+// 		s3: s3,
+//         bucket: 'instafake',
+//         acl: 'public-read',
+//         // location: 'https://s3.amazonaws.com/instafake/',
+//         metadata: function (req, file, cb) {
+//         	console.log(file.fieldname);
+//       cb(null, {fieldName: file.fieldname});
+//     },
+//     key: function (req, file, cb) {
+//       cb(null, Date.now().toString())
+//     }
+// }),
+// });
   //       metadata: function (req, file, cb) {
   //           var lgdUserDir = req.cookies['userid'];
 		// 	var dir = 'images/user' + lgdUserDir;
@@ -73,8 +91,7 @@ var uploadAWS = multer({
 
 	// 	cb(null, file.fieldname + imgNum + '.' + file.mimetype.split('/')[1]);
 	// }
-}),
-});
+
 
 router.get('/', function(req, res) {
 
@@ -109,7 +126,7 @@ router.get('/', function(req, res) {
 	});
 });
 
-router.post('/', uploadAWS.single('image'), function(req, res, next) {
+router.post('/', uploadFile.single('image'), function(req, res, next) {
 
 	var lgdUserId = req.cookies['userid'];
 	var createdImg = req.file.filename;
