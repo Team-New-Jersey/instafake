@@ -25,21 +25,41 @@ var pool = new pg.Pool({
 var lgdUserId;
 var lgdUsername;
 
-var uploadFile = function(req, res) {
-    var item = req.body;
-    var upload = multer({
-        storage: multerS3({
-            s3: s3,
-            bucket: 'instafake',
-            metadata: function (req, file, cb) {
-                cb(null, { fieldName: file.fieldname });
-            },
-            key: function (req, file, cb) {
-                cb(null, Date.now().toString())
-            }
-        })
-    })
-}
+// var myStorage = multer.diskStorage({
+
+// 	destination: function (req, file, cb) {
+// 		var lgdUserDir = req.cookies['userid'];
+// 		var dir = './public/images/user' + lgdUserDir;
+
+// 		if (!fs.existsSync(dir)){
+//     		fs.mkdirSync(dir);
+// 		}
+// 		cb(null, __dirname + '/../public/images/user' + lgdUserDir)
+// 	},
+
+// 	filename: function (req, file, cb) { 
+// 		function genRand() {
+//       		return Math.floor(Math.random()*89999999+10000000);
+//    		};
+//    		var imgNum = genRand();
+
+// 		cb(null, file.fieldname + imgNum + '.' + file.mimetype.split('/')[1]);
+// 	}
+
+// });
+var myStorage = multerS3({
+    s3: s3,
+    bucket: 'instafake',
+    metadata: function (req, file, cb) {
+        cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+        cb(null, Date.now().toString())
+    }
+});
+
+var requestHandler = multer({ storage: myStorage });
+
 // var uploadAWS = multer({
 // 	storage: multerS3({
 // 		s3: s3,
@@ -126,13 +146,13 @@ router.get('/', function(req, res) {
 	});
 });
 
-router.post('/', uploadFile.single('image'), function(req, res, next) {
+router.post('/', requestHandler.single('image'), function(req, res, next) {
 
 	var lgdUserId = req.cookies['userid'];
 	var createdImg = req.file.filename;
-	// var location = req.file.location + createdImg;
+	var location = req.file.location + createdImg;
 
-	// fs.createReadStream('images/user' + lgdUserId + '/' + createdImg).pipe(fs.createWriteStream('images/' + createdImg));
+	fs.createReadStream('images/user' + lgdUserId + '/' + createdImg).pipe(fs.createWriteStream('images/' + createdImg));
 
 	Posts.create({
 		description : req.body.description,
