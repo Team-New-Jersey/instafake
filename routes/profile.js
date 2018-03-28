@@ -156,9 +156,9 @@ router.post('/', requestHandler.single('image'), function(req, res, next) {
 	// fs.createReadStream('images/user' + lgdUserId + '/' + createdImg).pipe(fs.createWriteStream('images/' + createdImg));
 
 	Posts.create({
-		description : req.body.description,
-		user_id : lgdUserId,
-		img_name : createdImg
+		description: req.body.description,
+		user_id: lgdUserId,
+		img_name: createdImg
 	});
 
 	res.redirect('/api/protected/profile');

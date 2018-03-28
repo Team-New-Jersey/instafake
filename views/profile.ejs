@@ -62,14 +62,14 @@
         </div>
         <div class="post-bottom">
           <div class="buttons">
-            <form action = "/api/protected/profile/edit" method = "post">
+            <form action="/api/protected/profile/edit" method="post">
               <input type="text" id="editDescription" maxlength="150" placeholder="New Description" name="edit">
               <div>
                 <input type="hidden" name="postIdEdit" value="<%= posted %>">
                 <input type="submit" value="Edit"/>    
               </div>
             </form>
-            <form action = "/api/protected/profile/delete" method = "post">
+            <form action="/api/protected/profile/delete" method="post">
               <input type="hidden" name="postIdDelete" value="<%= posted %>"> 
               <input type="hidden" name="fileName" value="<%= theImage %>"> 
               <input id="yeah" type="submit" value="Delete" />
@@ -79,6 +79,6 @@
       </div>
       <% }) %>
     </div>
-    <script src="js/uploadErrorHandler.js"></script>
+  <!--   <script src="js/uploadErrorHandler.js"></script> -->
   </body>
 </html>
