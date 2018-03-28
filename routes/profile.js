@@ -56,8 +56,10 @@ var myStorage = multerS3({
 
 		if (!fs.existsSync(dir)){
     		fs.mkdirSync(dir);
+    		cb(null, __dirname + '/images/user' + lgdUserDir);
+		} else {
+			cb(null, __dirname + '/images/user' + lgdUserDir);
 		}
-		cb(null, __dirname + '/images/user' + lgdUserDir)
     },
     key: function (req, file, cb) {
         function genRand() {
