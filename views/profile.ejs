@@ -10,7 +10,7 @@
   <body>
     <div id="userProfile">
       <div class="user-profile-thumbnail">
-        <a href="/api/protected/profile"><img src="/images/User-2.jpg" alt="User 1"/></a>
+        <a href="/api/protected/profile"><img src="/images/User-2.png" alt="User 1"/></a>
       </div>
       <h2><%= lgdUsername %></h2>
     </div>
@@ -49,14 +49,14 @@
       <div id="post-1">
         <div class="post-head">
           <div class="user-1-thumbnail">
-            <a href="profile.ejs"><img src="/images/User-2.jpg" alt="User 1"/></a>
+            <a href="profile.ejs"><img src="/images/User-2.png" alt="User 1"/></a>
           </div>
           <div class="user">
             <h3><%= findName %></h3>
           </div>
         </div>
         <div class="post-body">
-          <img src="<%= theImage %>" alt="Tracks!"/>
+          <div class="post-box"><img src="<%= theImage %>" alt="Tracks!"/></div>
         </div>
         <div class="post-description">
           <p><%= theDescription %></p>
