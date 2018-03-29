@@ -14,6 +14,7 @@ var AWS = require('aws-sdk');
 AWS.config.loadFromPath('./s3_config.json');
 var s3 = new AWS.S3();
 
+
 var pool = new pg.Pool({
     user: process.env.HEROKU_DB_USER,
     password: process.env.HEROKU_DB_PW,

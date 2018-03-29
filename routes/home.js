@@ -5,6 +5,8 @@ var http = require('http');
 var pg = require('pg');
 var _ = require('lodash');
 require('./login');
+require('dotenv').config();
+
 
 var pool = new pg.Pool ({
 	user: process.env.HEROKU_DB_USER,
