@@ -47,7 +47,7 @@ router.get('/', function(req, res) {
 	
 	pool.connect(function(err, client, done) {
 		if(err) throw err;
-		client.query('SELECT ARRAY (SELECT id FROM users); SELECT ARRAY (SELECT username FROM users); SELECT ARRAY (SELECT id FROM posts); SELECT ARRAY (SELECT user_id FROM posts); SELECT ARRAY (SELECT description FROM posts); SELECT ARRAY (SELECT img_name FROM posts); SELECT ARRAY (SELECT id FROM likes); SELECT * FROM likes WHERE post_id IN (SELECT post_id FROM likes GROUP BY post_id having count(*) > 2); SELECT ARRAY (SELECT user_id FROM likes); SELECT ARRAY (SELECT post_id FROM likes); SELECT ARRAY (SELECT id FROM comments); SELECT ARRAY (SELECT comment FROM comments); SELECT ARRAY (SELECT user_id FROM comments); SELECT ARRAY (SELECT post_id FROM comments)',
+		client.query('SELECT ARRAY (SELECT id FROM users); SELECT ARRAY (SELECT username FROM users); SELECT ARRAY (SELECT id FROM posts); SELECT ARRAY (SELECT user_id FROM posts); SELECT ARRAY (SELECT description FROM posts); SELECT ARRAY (SELECT img_name FROM posts);',
 		(err, result) => { 
 			if (err) { throw err }
 			
@@ -57,6 +57,7 @@ router.get('/', function(req, res) {
   			var postUserIds = result[3].rows[0].array;
   			var postDescriptions = result[4].rows[0].array;
   			var postImg = result[5].rows[0].array;
+  			
   			
 			res.render('profile', {
 		    	lgdUserId: lgdUserId,
