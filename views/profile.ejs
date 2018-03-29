@@ -38,7 +38,14 @@
 
     <div id="feed">
       <% 
-        var lgdUserIndexes = postUserIds.indexOf(lgdUserId);
+        var lgdUserIndexes = [];
+        postUserIds.forEach(function(postsUserId) {
+          if (postsUserId === lgdUserId) {
+            var usersPostIndex = postUserIds.indexOf(postsUserId);
+            lgdUserIndexes.push(usersPostIndex);
+          }
+        }
+        console.log(lgdUserIndexes);
         lgdUserIndexes.forEach(function(posted) {
           var theDescription = postDescriptions[posted];
           var theImage = postImg[posted];
