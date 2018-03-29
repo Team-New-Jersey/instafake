@@ -40,17 +40,20 @@
       <% postIds.forEach(function(posted) {
         var postIdIndex = postIds.indexOf(posted); //which row is the posts id in
         var theUserId = postUserIds[postIdIndex]; // corresponding user_id
-        var theDescription;
-        var theImage;
-        var userIdIndex;
-        if (theUserId === lgdUserId) {
-          theDescription = postDescriptions[postIdIndex];
-          theImage = postImg[postIdIndex];
-          userIdIndex = userIds.indexOf(theUserId); // which row is the users id in
-        }
+        var theDescription = postDescriptions[postIdIndex];
+        var theImage = postImg[postIdIndex];
+        var userIdIndex = userIds.indexOf(theUserId); // which row is the users id in
+        var findName = usernames[userIdIndex]; // corresponding username 
+       
       %>
       <div id="post-1">
         <div class="post-head">
+          <div class="user-1-thumbnail">
+            <a href="profile.ejs"><img src="/images/User-2.jpg" alt="User 1"/></a>
+          </div>
+          <div class="user">
+            <h3><%= findName %></h3>
+          </div>
         </div>
         <div class="post-body">
           <img src="<%= theImage %>" alt="Tracks!"/>
@@ -58,8 +61,11 @@
         <div class="post-description">
           <p><%= theDescription %></p>
         </div>
+        <%
+           if (theUserId === lgdUserId) {
+        %>
         <div class="post-bottom">
-
+          
           <div class="buttons">
             <form action="/api/protected/profile/edit" method="post">
               <input type="text" id="editDescription" maxlength="150" placeholder="New Description" name="edit">
@@ -75,8 +81,11 @@
             </form>
           </div>
         </div>
+        <% 
+      }
+        %>
       </div>
-      <%
+      <% 
     }) %>
     </div>
   </body>
