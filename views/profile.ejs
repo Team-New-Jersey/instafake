@@ -46,9 +46,9 @@
           return indexes;
         }
           
-        var indexes = getAllIndexes(postUserIds, lgdUserId);
+        var postIndexes = getAllIndexes(postUserIds, lgdUserId);
 
-        indexes.forEach(function(posted) {
+        postIndexes.forEach(function(posted) {
           var theDescription = postDescriptions[posted];
           var theImage = postImg[posted];
           var thePostsId = postIds[posted];
