@@ -37,25 +37,30 @@
     </div>
 
     <div id="feed">
-      <% 
-        function getAllIndexes(arr, val) {
-    var indexes = [], i = -1;
-    while ((i = arr.indexOf(val, i+1)) != -1){
-        indexes.push(i);
-    }
-    return indexes;
-}
-
-var indexes = getAllIndexes(postUserIds, lgdUserId);
+      <% postIds.forEach(function(posted) {
+        var postIdIndex = postIds.indexOf(posted); //which row is the posts id in
+        var theUserId = postUserIds[postIdIndex]; // corresponding user_id
+        if (theUserId === lgdUserId) {
+          var theDescription = postDescriptions[postIdIndex];
+          var theImage = postImg[postIdIndex];
+          var userIdIndex = userIds.indexOf(theUserId); // which row is the users id in
+          var findName = usernames[userIdIndex]; // corresponding username 
+        } else {
+          var theDescription = null;
+          var theImage = null;
+          var userIdIndex = null; // which row is the users id in
+          var findName = null; // corresponding username 
+        } 
         
-
-      indexes.forEach(function(posted) {
-          var theDescription = postDescriptions[posted];
-          var theImage = postImg[posted];
-          var thePostsId = postIds[posted];
       %>
       <div id="post-1">
         <div class="post-head">
+          <div class="user-1-thumbnail">
+            <a href="profile.ejs"><img src="/images/User-2.jpg" alt="User 1"/></a>
+          </div>
+          <div class="user">
+            <h3><%= findName %></h3>
+          </div>
         </div>
         <div class="post-body">
           <img src="<%= theImage %>" alt="Tracks!"/>
@@ -64,23 +69,26 @@ var indexes = getAllIndexes(postUserIds, lgdUserId);
           <p><%= theDescription %></p>
         </div>
         <div class="post-bottom">
+
           <div class="buttons">
             <form action="/api/protected/profile/edit" method="post">
               <input type="text" id="editDescription" maxlength="150" placeholder="New Description" name="edit">
               <div>
-                <input type="hidden" name="postIdEdit" value="<%= thePostsId %>">
+                <input type="hidden" name="postIdEdit" value="<%= posted %>">
                 <input type="submit" value="Edit"/>    
               </div>
             </form>
             <form action="/api/protected/profile/delete" method="post">
-              <input type="hidden" name="postIdDelete" value="<%= thePostsId %>"> 
+              <input type="hidden" name="postIdDelete" value="<%= posted %>"> 
               <input type="hidden" name="fileName" value="<%= theImage %>"> 
               <input id="yeah" type="submit" value="Delete" />
             </form>
           </div>
         </div>
       </div>
-      <% }) %>
+      <%
+      } 
+    }) %>
     </div>
   </body>
 </html>
