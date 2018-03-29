@@ -40,10 +40,13 @@
       <% postIds.forEach(function(posted) {
         var postIdIndex = postIds.indexOf(posted); //which row is the posts id in
         var theUserId = postUserIds[postIdIndex]; // corresponding user_id
+        var theDescription;
+        var theImage;
+        var userIdIndex;
         if (theUserId === lgdUserId) {
-          var theDescription = postDescriptions[postIdIndex];
-          var theImage = postImg[postIdIndex];
-          var userIdIndex = userIds.indexOf(theUserId); // which row is the users id in
+          theDescription = postDescriptions[postIdIndex];
+          theImage = postImg[postIdIndex];
+          userIdIndex = userIds.indexOf(theUserId); // which row is the users id in
         }
       %>
       <div id="post-1">
