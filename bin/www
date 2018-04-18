@@ -1,0 +1,33 @@
+let app = require('../server');
+let models = require("../db");
+let debug = require('debug')('create:server');
+
+var server = http.createServer(app);
+
+let port = normalizePort(process.env.PORT || '4000');
+app.set('port', port);
+
+
+function normalizePort(val) {
+  let port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+console.log('sync...')
+models.sequelize.sync().then(function () {
+    console.log('start server...')
+    let server = app.listen(app.get('port'), function() {
+      console.log('Server listening on localhost:' + server.address().port);
+    });
+});

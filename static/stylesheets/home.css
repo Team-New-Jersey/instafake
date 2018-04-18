@@ -1,0 +1,138 @@
+#post-1 {
+    margin: auto;
+    width: 50%;
+    border: 3px solid black;
+    padding: 10px;
+    margin-bottom: 100px;
+}
+
+#post-2 {
+    margin: auto;
+    width: 50%;
+    border: 3px solid black;
+    padding: 10px;
+    margin-bottom: 100px;
+}
+
+
+#post-3 {
+    margin: auto;
+    width: 50%;
+    border: 3px solid black;
+    padding: 10px;
+    margin-bottom: 100px;
+}
+
+
+#post-4 {
+    margin: auto;
+    width: 50%;
+    border: 3px solid black;
+    padding: 10px;
+    margin-bottom: 100px;
+}
+
+
+
+.user-1-thumbnail img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0px;
+    height: 75px;
+    width: 75px;
+    background-size: cover;
+    display: block;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+}
+
+.user-1-thumbnail img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.user-2-thumbnail img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0px;
+  height: 75px;
+  width: 75px;
+  background-size: cover;
+  display: block;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+}
+
+.user-2-thumbnail img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.user-3-thumbnail img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0px;
+  height: 75px;
+  width: 75px;
+  background-size: cover;
+  display: block;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+}
+
+.user-3-thumbnail img:hover {
+    box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.user {
+  position: relative;
+  left: 100px;
+  bottom: 50px;
+
+}
+
+.post-box img {
+    max-height: 100%;
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.post-head {
+    border-style: solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid #000000;
+}
+
+.post-body {
+    border-style: solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid #000000;
+}
+
+
+.post-description {
+    border-style: solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid #000000;
+    font-style: oblique;
+    text-align: center;
+}
+
+.post-bottom {
+    text-align: left;
+    font-family: serif;
+
+}
+
+.buttons {
+    margin: 5px;
+    float: right;
+}
