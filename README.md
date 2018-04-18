@@ -1,4 +1,4 @@
-<img src="/static/images/User-2.png" align="right" />
+<img src="/static/images/User-2.png" align="right" width="500px" height="500px" />
 
 # Instafake
 [Raymond Ajax Metrulis](https://github.com/reizeismith) and [Sean McNeeley](https://github.com/sean21mcn) collaborated on this project.
