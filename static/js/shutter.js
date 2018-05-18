@@ -82,9 +82,8 @@ $(document).ready(function(){
 				    animateTo:-305,
 				    queue: false
 				});
-	    
+	    		$(".camera").css('visibility', 'visible'); 
 				$("#form").delay(500).queue(function (next) { 
-	    			$(this).css('zIndex', 1); 
 	    			$(this).unbind("submit").submit();
 	    			next(); 
 	  			});

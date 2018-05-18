@@ -2,44 +2,52 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/reset.css"/>
     <link rel="stylesheet" href="/stylesheets/login.css"/>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://beneposto.pl/jqueryrotate/js/jQueryRotateCompressed.js"></script>
-		<h2>Welcome to Instafake</h2>
+		<h2>Welcome to <span>Instafake</span></h2>
 
 </head>
 
 <body>
-	<div id="phone">
-		<div id="lens">
-			<form id="form" action="/api/signup" method="post" enctype="application/x-www-form-urlencoded">
-				<div>
-					<label>Username:</label>
-					<input type="text" name="username"/><br/>
-				</div>
-				<div>
-					<label>Password:</label>
-					<input type="password" name="password"/>
-				</div>
-				<div>
-					<input id="snap" type="submit"/>
-				</div>
-			</form>
-			<div class="filter"></div>
-			<div class="shutter"></div>
-			<div class="shutter2"></div>
-			<div class="shutter3"></div>
-			<div class="shutter4"></div>
-			<div class="shutter5"></div>
-			<div class="shutter6"></div>
-		</div>
-		<a class="link" href="/api">
-			Log In
-		</a>
+	<div id="phone"></div>
+	<div id="lens">
+		<p>Desktop simulation of Instagram.</p>
+		<p>Log in to your account to post photos or sign up here.</p>
+		<h1>Sign Up</h1>
+		<form id="form" action="/api/signup" method="post" enctype="application/x-www-form-urlencoded">
+			<div>
+				<label>Username:</label>
+				<input type="text" name="username"/><br/>
+			</div>
+			<div>
+				<label>Password:</label>
+				<input type="password" name="password"/>
+			</div>
+			<div>
+				<input id="snap" type="submit"/>
+			</div>
+		</form>
+		<div class="camera"></div>
+		<div class="filter"></div>
+		<div class="shutter"></div>
+		<div class="shutter2"></div>
+		<div class="shutter3"></div>
+		<div class="shutter4"></div>
+		<div class="shutter5"></div>
+		<div class="shutter6"></div>
 	</div>
+	<a class="link" href="/api">
+		<div id="link-fill">
+			Log In
+		</div>
+	</a>
 	<script src="/js/lens.js"></script>
 	<script src="/js/shutter.js"></script>
 </body>
 </html>
+

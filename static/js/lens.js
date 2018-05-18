@@ -19,9 +19,8 @@ $(document).ready(function(){
 				    queue: false
 				});
 				
-	    
+	    		$(".camera").css('visibility', 'visible'); 
 				$(".link").delay(500).queue(function (next) { 
-	    			$("#form").css('zIndex', 1); 
 	    			document.location = $self.attr('href');
 	    			next(); 
 	  			});
