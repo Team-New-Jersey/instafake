@@ -1,7 +1,13 @@
+body {
+	font-family: 'Oswald', sans-serif;
+	text-align: center;
+}
+
 p {
-  text-align: center;
-  font-style: italic;
-  font-family: serif;
-  font-size: 20;
-  padding: 250px;
+	font-size: 20px;
+	margin-bottom: 20px;
+}
+
+a:link, a:visited, a:hover, a:active {
+	color: black;
 }

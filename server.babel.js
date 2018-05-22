@@ -36,15 +36,16 @@ app.use('/api/protected/', function(req, res, next) {
     if (user) {
       req.login(user, null, () => {})
       next()
-    } else  {
-      next(jwtError)
+    } else {
+      res.redirect(301, 'http://localhost:4000/api')
+      next();
     }
   })(req, res, next)
 });
 
 app.use('/api/protected/', homeRoutes);
 app.use('/api/protected/profile', profileRoutes);
-app.use('/api/protected', logoutRoutes);
+app.use('/api/logout', logoutRoutes);
 
 const { Client } = require('pg');
 
@@ -54,14 +55,6 @@ const client = new Client({
 });
 
 client.connect();
-
-// client.query('SELECT table_schema,table_name FROM information_schema.tables;', (err, res) => {
-//   if (err) throw err;
-//   for (let row of res.rows) {
-//     console.log(JSON.stringify(row));
-//   }
-//   client.end();
-// });
 
 app.use('/api/*', function(req, res, next) {
   var err = new Error('Not Found');
